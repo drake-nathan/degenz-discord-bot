@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-const getPrice = async (contractAddress: string, tokenId: number) => {
+export const getPrice = async (contractAddress: string, tokenId: number) => {
   const rootUrl = 'https://opensea.io/assets/ethereum';
   const url = `${rootUrl}/${contractAddress}/${tokenId}`;
 
@@ -12,10 +12,10 @@ const getPrice = async (contractAddress: string, tokenId: number) => {
 
     const price = $('.Price--amount').first().text();
 
-    console.log(price);
+    return price;
   } catch (error) {
     console.error(error);
   }
 };
 
-getPrice('0xc23a563a26afff06e945ace77173e1568f288ce5', 5);
+// getPrice('0xc23a563a26afff06e945ace77173e1568f288ce5', 5);

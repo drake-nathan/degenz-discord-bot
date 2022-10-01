@@ -1,29 +1,27 @@
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import * as dotenv from 'dotenv';
+import { fetchCollectionFloor } from './logic/fetchCollectionFloor';
+import { getEmbed } from './message/embed';
 
 dotenv.config();
 const token = process.env.TOKEN;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.info('Ready!');
-});
 
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+  const embed = await getEmbed();
 
-  const { commandName } = interaction;
+  const channel = (await client.channels.fetch('931293519518249001')) as TextChannel;
 
-  if (commandName === 'ping') {
-    await interaction.reply('Pong!');
-  } else if (commandName === 'server') {
-    await interaction.reply(
-      `Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`,
-    );
-  } else if (commandName === 'user') {
-    await interaction.reply('User info.');
-  }
+  const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
+
+  lastMsg.edit({ embeds: [embed] });
+
+  // const message = await channel.send({
+  //   embeds: [embed],
+  // });
 });
 
 client.login(token);
