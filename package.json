@@ -6,9 +6,10 @@
   "author": "Nathan Drake",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/src/index.js",
+    "postinstall": "tsc",
     "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
     "devstart": "yarn dev",
     "deploy": "git push heroku main"
