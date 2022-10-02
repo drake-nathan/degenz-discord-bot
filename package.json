@@ -7,10 +7,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "prestart": "npm run build",
     "start": "node dist/src/index.js",
-    "postinstall": "tsc",
-    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
+    "postinstall": "npm run build",
+    "dev": "npm run build && npm start",
     "devstart": "yarn dev",
     "deploy": "git push heroku main"
   },
