@@ -26,14 +26,18 @@ try {
     } else {
       await channel.send({ embeds: [embed] });
     }
+
+    console.info(`Updated embed at ${new Date().toISOString()}`);
   };
 
   const updateJob = new CronJob('*/5 * * * *', async () => {
-    await updateFloorsEmbed().then(() => console.info('Successfully updated!\n'));
+    await updateFloorsEmbed();
   });
 
   client.once('ready', async () => {
     console.info('Bot online!');
+
+    await updateFloorsEmbed();
 
     updateJob.start();
   });
