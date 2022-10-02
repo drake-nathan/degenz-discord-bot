@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "prestart": "yarn build",
     "start": "node dist/src/index.js",
-    "postinstall": "npm run build",
     "dev": "npm run build && npm start",
     "devstart": "yarn dev",
     "deploy": "git push heroku main"

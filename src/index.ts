@@ -28,7 +28,7 @@ try {
     }
   };
 
-  const updateJob = new CronJob('*/2 * * * *', async () => {
+  const updateJob = new CronJob('*/5 * * * *', async () => {
     await updateFloorsEmbed().then(() => console.info('Successfully updated!\n'));
   });
 
