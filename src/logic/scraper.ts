@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 
 export const getPrice = async (contractAddress: string, tokenId: number) => {
@@ -14,9 +14,13 @@ export const getPrice = async (contractAddress: string, tokenId: number) => {
 
     return price;
   } catch (error) {
-    if (error.response.status === 503) {
-      console.error('Scraping was blocked by Cloudflare.');
-      return 'N/A';
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === 503) {
+        console.error('Scraping was blocked by Cloudflare.');
+        return 'N/A';
+      }
+      console.error(axiosError.response?.data);
     }
     console.error(error);
   }
