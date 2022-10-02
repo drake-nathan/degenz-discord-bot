@@ -14,6 +14,10 @@ export const getPrice = async (contractAddress: string, tokenId: number) => {
 
     return price;
   } catch (error) {
+    if (error.response.status === 503) {
+      console.error('Scraping was blocked by Cloudflare.');
+      return 'N/A';
+    }
     console.error(error);
   }
 };

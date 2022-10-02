@@ -5,13 +5,13 @@ import { getPrice } from '../logic/scraper';
 
 export const formatPrice = (name: string, price: string) => {
   const numPrice = Number(price);
-
+  if (Number.isNaN(numPrice)) return price;
   if (name === 'purgatorio' && numPrice < 1) {
     return `420.69 ETH, probs`;
   }
-  if (numPrice < 0.1) return numPrice.toFixed(3);
-  if (numPrice >= 1) return numPrice.toFixed(1);
-  return numPrice.toFixed(2);
+  if (numPrice < 0.1) return `${numPrice.toFixed(3)} ETH`;
+  if (numPrice >= 1) return `${numPrice.toFixed(1)} ETH`;
+  return `${numPrice.toFixed(2)} ETH`;
 };
 
 export const getAllFloors = async () => {
@@ -28,13 +28,13 @@ export const getAllFloors = async () => {
         const floor = await getPrice(address, tokenId);
         const displayFloor = formatPrice(tokenName, floor);
 
-        message += ` - ${tokenName} : ${displayFloor} ETH\n`;
+        message += ` - ${tokenName} : ${displayFloor}\n`;
       }
     } else {
       const floor = await fetchCollectionFloor(slug);
       const displayFloor = formatPrice(name, floor);
 
-      message += `**${name}:** ${displayFloor} ETH\n`;
+      message += `**${name}:** ${displayFloor}\n`;
     }
   }
 
