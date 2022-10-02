@@ -1,27 +1,44 @@
 import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import * as dotenv from 'dotenv';
-import { fetchCollectionFloor } from './logic/fetchCollectionFloor';
+import { CronJob } from 'cron';
 import { getEmbed } from './message/embed';
 
-dotenv.config();
-const token = process.env.TOKEN;
+try {
+  dotenv.config();
+  const token = process.env.TOKEN;
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  if (!token) {
+    throw new Error('No discord token found!');
+  }
 
-client.once('ready', async () => {
-  console.info('Ready!');
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-  const embed = await getEmbed();
+  const updateFloorsEmbed = async () => {
+    const channelId = process.env.CHANNEL_ID;
+    const channel = (await client.channels.fetch(channelId)) as TextChannel;
 
-  const channel = (await client.channels.fetch('931293519518249001')) as TextChannel;
+    const embed = await getEmbed();
 
-  const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
+    const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
 
-  lastMsg.edit({ embeds: [embed] });
+    if (lastMsg) {
+      lastMsg.edit({ embeds: [embed] });
+    } else {
+      await channel.send({ embeds: [embed] });
+    }
+  };
 
-  // const message = await channel.send({
-  //   embeds: [embed],
-  // });
-});
+  const updateJob = new CronJob('*/2 * * * *', async () => {
+    await updateFloorsEmbed().then(() => console.info('Successfully updated!\n'));
+  });
 
-client.login(token);
+  client.once('ready', async () => {
+    console.info('Bot online!');
+
+    updateJob.start();
+  });
+
+  client.login(token);
+} catch (error) {
+  console.error(error);
+}
