@@ -9,8 +9,6 @@
     "build": "tsc",
     "prestart": "yarn build",
     "start": "node dist/src/index.js",
-    "dev": "npm run build && npm start",
-    "devstart": "yarn dev",
     "deploy": "git push heroku main"
   },
   "engines": {
@@ -23,7 +21,7 @@
     "cron": "^2.1.0",
     "discord.js": "^14.5.0",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.1"
+    "mongoose": "^6.6.3"
   },
   "devDependencies": {
     "@types/cron": "^2.0.0",

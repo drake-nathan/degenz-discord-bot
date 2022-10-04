@@ -1,48 +1,48 @@
 import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
-import { getEmbed } from './message/embed';
+import { getEmbed } from './server/embed';
 
-try {
-  dotenv.config();
-  const token = process.env.TOKEN;
+dotenv.config();
+const token = process.env.TOKEN;
 
-  if (!token) {
-    throw new Error('No discord token found!');
+if (!token) {
+  throw new Error('No discord token found!');
+}
+
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+const updateEmbed = async () => {
+  const channelId = process.env.CHANNEL_ID;
+  const channel = (await client.channels.fetch(channelId)) as TextChannel;
+
+  const embed = await getEmbed();
+
+  const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
+
+  if (lastMsg) {
+    lastMsg.edit({ embeds: [embed] });
+  } else {
+    await channel.send({ embeds: [embed] });
   }
 
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  console.info(`Updated embed at ${new Date()}`);
+};
 
-  const updateFloorsEmbed = async () => {
-    const channelId = process.env.CHANNEL_ID;
-    const channel = (await client.channels.fetch(channelId)) as TextChannel;
+const updateJob = new CronJob('*/5 * * * *', async () => {
+  await updateEmbed();
+});
 
-    const embed = await getEmbed();
+client.once('ready', async () => {
+  console.info('Bot online!');
 
-    const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
+  await updateEmbed();
 
-    if (lastMsg) {
-      lastMsg.edit({ embeds: [embed] });
-    } else {
-      await channel.send({ embeds: [embed] });
-    }
+  updateJob.start();
+});
 
-    console.info(`Updated embed at ${new Date().toISOString()}`);
-  };
+client.login(token);
 
-  const updateJob = new CronJob('*/5 * * * *', async () => {
-    await updateFloorsEmbed();
-  });
-
-  client.once('ready', async () => {
-    console.info('Bot online!');
-
-    await updateFloorsEmbed();
-
-    updateJob.start();
-  });
-
-  client.login(token);
-} catch (error) {
-  console.error(error);
-}
+client.on('error', (e) => console.error(e));
+client.on('warn', (e) => console.warn(e));
+client.on('debug', (e) => console.info(e));

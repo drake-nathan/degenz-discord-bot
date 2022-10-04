@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
-import { nfts } from '../data/nfts';
-import { fetchCollectionFloor } from '../logic/fetchCollectionFloor';
-import { getPrice } from '../logic/scraper';
+import { nfts } from '../db/data';
+import { fetchCollectionFloor } from '../fetches/fetchCollectionFloor';
+import { scrape1155 } from '../fetches/scrapers';
 
 export const formatPrice = (name: string, price: string) => {
   const numPrice = Number(price);
@@ -14,18 +14,24 @@ export const formatPrice = (name: string, price: string) => {
   return `${numPrice.toFixed(2)} ETH`;
 };
 
-export const getAllFloors = async () => {
+export const updateFloorsInDb = async () => {
   let message = '';
 
   for await (const nft of nfts) {
-    const { name, slug, address, type, elevenFiftyFiveTokens } = nft;
+    const {
+      name,
+      collectionSlug: slug,
+      address,
+      contractType,
+      tokens: elevenFiftyFiveTokens,
+    } = nft;
 
-    if (type === 'ERC1155' && elevenFiftyFiveTokens) {
+    if (contractType === 'ERC1155' && elevenFiftyFiveTokens) {
       message += `\n__**${name}**__\n`;
 
       for await (const token of elevenFiftyFiveTokens) {
         const { tokenId, name: tokenName } = token;
-        const floor = await getPrice(address, tokenId);
+        const floor = await scrape1155(address, tokenId);
         const displayFloor = formatPrice(tokenName, floor);
 
         message += ` - ${tokenName} : ${displayFloor}\n`;

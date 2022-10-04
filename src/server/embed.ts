@@ -1,10 +1,10 @@
 import { EmbedBuilder } from 'discord.js';
-import { getAllFloors } from './helpers';
+import { updateFloorsInDb } from './helpers';
 
 export const getEmbed = async () => {
   console.info('Updating floors embed...');
 
-  const message = await getAllFloors();
+  const message = await updateFloorsInDb();
 
   const embed = new EmbedBuilder()
     .setTitle('Degenz/OSF Floor Prices')
