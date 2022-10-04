@@ -22,3 +22,16 @@ export const updateNft = async (conn: Connection, nft: Nft) => {
 
   return query;
 };
+
+export const buildDb = async (conn: Connection, nfts: Nft[]) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  const query = await NftModel.create(nfts);
+  return query;
+};
+
+export const clearDb = async (conn: Connection) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  await NftModel.deleteMany({}).exec();
+};

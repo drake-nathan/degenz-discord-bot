@@ -63,6 +63,6 @@ export const updateFloorsInDb = async () => {
   await conn.close();
 };
 
-updateFloorsInDb()
-  .then(() => console.info('Done!'))
-  .catch((err) => console.error(err));
+// updateFloorsInDb()
+//   .then(() => console.info('Done!'))
+//   .catch((err) => console.error(err));

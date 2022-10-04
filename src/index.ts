@@ -2,6 +2,10 @@ import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
 import { getEmbed } from './server/embed';
+import { updateFloorsInDb } from './server/updateFloorsInDb';
+import { buildDb, clearDb } from './db/queries';
+import { connectionFactory } from './db/connectionFactory';
+import { nfts } from './db/data';
 
 dotenv.config();
 const token = process.env.TOKEN;
@@ -29,16 +33,30 @@ const updateEmbed = async () => {
   console.info(`Updated embed at ${new Date()}`);
 };
 
-const updateJob = new CronJob('*/5 * * * *', async () => {
+const updateDbCron = new CronJob('*/5 * * * *', async () => {
+  await updateFloorsInDb();
+});
+
+const updateEmbedCron = new CronJob('*/5 * * * *', async () => {
   await updateEmbed();
 });
 
 client.once('ready', async () => {
   console.info('Bot online!');
 
+  const conn = await connectionFactory();
+  await clearDb(conn);
+  console.info('Cleared db');
+  await buildDb(conn, nfts);
+  console.info('Built db');
+  await conn.close();
+
+  await updateFloorsInDb();
+  console.info('Fetched prcies, added to db');
   await updateEmbed();
 
-  updateJob.start();
+  updateDbCron.start();
+  updateEmbedCron.start();
 });
 
 client.login(token);
