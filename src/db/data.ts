@@ -52,6 +52,16 @@ export const nfts: Nft[] = [
         query:
           '?search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Gold&search[sortAscending]=true&search[sortBy]=UNIT_PRICE',
       },
+      {
+        name: 'Candles',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Background&search[stringTraits][0][values][0]=Candles',
+      },
+      {
+        name: 'Candles Inverted',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Background&search[stringTraits][0][values][0]=Candles%20Inverted',
+      },
     ],
   },
   {

@@ -23,27 +23,31 @@ export const getEmbed = async () => {
   // const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
 
-  const message = `
-    ${singles
-      .map((nft) => `**${nft.name}:** \u200b ${formatPrice(nft.price)}`)
-      .join('\n')}
-    \n**${rektguy[0].name}:** \u200b ${formatPrice(rektguy[0].price)}
-    ${rektguy[0].specialTraitFloors
-      .map((trait) => `- ${trait.name}: \u200b ${formatPrice(trait.price)}`)
-      .join('\n')}
-    \n**${rld.name}:** \u200b ${formatPrice(rld.price)}
-    **RLD Editions:**
-    ${rldEditions[0].tokens
-      .map(
-        (edition, i) => `${i + 1}. ${edition.name}: \u200b ${formatPrice(edition.price)}`,
-      )
-      .join('\n')}
-    \n**7 Deadly Sins:**
-    ${sevenDeadlySins.tokens
-      .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
-      .join('\n')}
-    \nOther editions and 1/1s will be added soon.
-  `;
+  let message: string = '';
+
+  message += `${singles
+    .map((nft) => `**${nft.name}:** \u200b ${formatPrice(nft.price)}`)
+    .join('\n')}\n`;
+
+  message += `\n**${rektguy[0].name}:** \u200b ${formatPrice(rektguy[0].price)}`;
+  message += `\n${rektguy[0].specialTraitFloors
+    .map((trait) => `- ${trait.name}: \u200b ${formatPrice(trait.price)}`)
+    .join('\n')}\n`;
+
+  message += `\n**${rld.name}:** \u200b ${formatPrice(rld.price)}`;
+  message += `\n**RLD Editions:**`;
+  message += `\n${rldEditions[0].tokens
+    .map(
+      (edition, i) => `${i + 1}. ${edition.name}: \u200b ${formatPrice(edition.price)}`,
+    )
+    .join('\n')}\n`;
+
+  message += `\n**7 Deadly Sins:**`;
+  message += `\n${sevenDeadlySins.tokens
+    .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
+    .join('\n')}\n`;
+
+  message += `\nOther editions and 1/1s will be added soon.`;
 
   const embed = new EmbedBuilder()
     .setTitle('Degenz/OSF Floor Prices')
