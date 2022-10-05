@@ -4,7 +4,7 @@ import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts, updateNft } from '../db/queries';
 import { FetchMethod, Nft } from '../db/types';
 import { fetchCollectionFloor } from '../fetches/fetchCollectionFloor';
-import { scrape1155, scrapeTrait } from '../fetches/scrapers';
+import { scrapeToken, scrapeTrait } from '../fetches/scrapers';
 
 const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   const { fetchMethod, collectionSlug, address, tokenId, tokens, specialTraitFloors } =
@@ -33,7 +33,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
 
   if (fetchMethod === FetchMethod.openSeaScrape) {
     if (tokenId) {
-      const newFloor = await scrape1155(address, tokenId);
+      const newFloor = await scrapeToken(address, tokenId);
       nft.price = newFloor;
       return updateNft(conn, nft);
     }
@@ -41,7 +41,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
     if (tokens) {
       const newTokens = await Promise.all(
         tokens.map(async (token) => {
-          const newFloor = await scrape1155(address, token.tokenId);
+          const newFloor = await scrapeToken(address, token.tokenId);
           token.price = newFloor;
           token.lastUpdated = new Date();
           return token;
@@ -50,6 +50,13 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
       nft.tokens = newTokens;
       return updateNft(conn, nft);
     }
+  }
+
+  if (fetchMethod === FetchMethod.openSeaTraitScrape) {
+    const newFloor = await scrapeTrait(collectionSlug, nft.query);
+    nft.price = newFloor;
+    nft.lastUpdated = new Date();
+    return updateNft(conn, nft);
   }
 };
 
@@ -63,6 +70,24 @@ export const updateFloorsInDb = async () => {
   await conn.close();
 };
 
-// updateFloorsInDb()
-//   .then(() => console.info('Done!'))
-//   .catch((err) => console.error(err));
+// export const update1of1sInDb = async () => {
+//   const conn = await connectionFactory();
+
+//   const nfts = await getAllNfts(conn);
+
+//   const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === 'oneOfOnes');
+
+//   await Promise.all(oneOfOnes.map(async (nft) => updateNftPriceInDb(conn, nft)));
+
+//   await conn.close();
+// };
+
+// export const updateAqsInDb = async () => {
+//   const conn = await connectionFactory();
+
+//   const aqRektguys = await getAqRektguys(conn);
+
+//   await updateAqRektguys(conn, aqRektguys);
+
+//   await conn.close();
+// };

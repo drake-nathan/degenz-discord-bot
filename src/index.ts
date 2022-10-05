@@ -52,7 +52,7 @@ client.once('ready', async () => {
   await conn.close();
 
   await updateFloorsInDb();
-  console.info('Fetched prcies, added to db');
+  console.info('Fetched prices, added to db');
   await updateEmbed();
 
   updateDbCron.start();

@@ -26,11 +26,13 @@ export interface TraitFloor {
 
 export interface Token {
   tokenId: number;
-  name: string;
+  name?: string;
   rldDropNumber?: number;
   mintDate?: Date;
   price?: string;
   lastUpdated?: Date;
+  lastSoldDate?: Date;
+  lastSoldPrice?: string;
 }
 
 export interface Nft {
@@ -50,4 +52,5 @@ export interface Nft {
   specialTraitFloors?: TraitFloor[];
   tokens?: Token[];
   tokenId?: number;
+  query?: string;
 }

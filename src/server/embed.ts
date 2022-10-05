@@ -20,7 +20,7 @@ export const getEmbed = async () => {
   const sevenDeadlySins = nfts.filter(
     (nft) => nft.sectionSlug === Section.sevenDeadlySins,
   )[0];
-  // const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
+  const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
 
   let message: string = '';
@@ -45,6 +45,11 @@ export const getEmbed = async () => {
   message += `\n**7 Deadly Sins:**`;
   message += `\n${sevenDeadlySins.tokens
     .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
+    .join('\n')}\n`;
+
+  message += `\n**Misc Editions:**`;
+  message += `\n${editions
+    .map((nft) => `- ${nft.name}: \u200b ${formatPrice(nft.price)}`)
     .join('\n')}\n`;
 
   message += `\nOther editions and 1/1s will be added soon.`;

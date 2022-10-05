@@ -14,6 +14,7 @@ export const nftSchema = new Schema<Nft>({
   tokenId: { type: Number },
   lastSoldDate: { type: Date },
   lastSoldPrice: { type: String },
+  query: { type: String },
   specialTraitFloors: [
     {
       name: { type: String, required: true },
@@ -24,12 +25,14 @@ export const nftSchema = new Schema<Nft>({
   ],
   tokens: [
     {
-      tokenId: { type: Number },
-      name: { type: String, required: true },
+      tokenId: { type: Number, required: true },
+      name: { type: String },
       rldDropNumber: { type: Number },
       mintDate: { type: Date },
       price: { type: String },
       lastUpdated: { type: Date },
+      lastSoldDate: { type: Date },
+      lastSoldPrice: { type: String },
     },
   ],
 });

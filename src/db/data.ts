@@ -63,6 +63,38 @@ export const nfts: Nft[] = [
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Background&search[stringTraits][0][values][0]=Candles%20Inverted',
       },
     ],
+    tokens: [
+      {
+        tokenId: 3566,
+      },
+      {
+        tokenId: 5144,
+      },
+      {
+        tokenId: 6799,
+      },
+      {
+        tokenId: 4160,
+      },
+      {
+        tokenId: 4211,
+      },
+      {
+        tokenId: 7091,
+      },
+      {
+        tokenId: 2883,
+      },
+      {
+        tokenId: 2850,
+      },
+      {
+        tokenId: 6660,
+      },
+      {
+        tokenId: 6113,
+      },
+    ],
   },
   {
     name: 'Red Lite District',
@@ -132,15 +164,6 @@ export const nfts: Nft[] = [
     ],
   },
   {
-    name: 'the rekt lotto 1',
-    collectionSlug: 'osf',
-    address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
-    contractType: 'ERC1155',
-    fetchMethod: FetchMethod.openSeaScrape,
-    sectionSlug: Section.editions,
-    tokenId: 10,
-  },
-  {
     name: '7 Deadly Sins',
     collectionSlug: 'osf-7-sins',
     address: '0x8297d8e55C27AA6CE2d8a65b1Fa3Debb02410efC',
@@ -194,5 +217,32 @@ export const nfts: Nft[] = [
     fetchMethod: FetchMethod.openSeaScrape,
     sectionSlug: Section.oneOfOnes,
     tokenId: 2,
+  },
+  {
+    name: 'The Private Party',
+    collectionSlug: 'osfs-distillery',
+    query:
+      '?search[query]=private%20party&search[sortAscending]=true&search[sortBy]=UNIT_PRICE',
+    address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
+    contractType: 'ERC721',
+    fetchMethod: FetchMethod.openSeaTraitScrape,
+    sectionSlug: Section.editions,
+  },
+  {
+    name: 'the rekt lotto 1',
+    collectionSlug: 'osf',
+    address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaScrape,
+    sectionSlug: Section.editions,
+    tokenId: 10,
+  },
+  {
+    name: 'Lova Park',
+    collectionSlug: 'lova-park-33260',
+    address: '0xb932a70A57673d89f4acfFBE830E8ed7f75Fb9e0',
+    contractType: 'ERC721',
+    fetchMethod: FetchMethod.superRareScrape,
+    sectionSlug: Section.oneOfOnes,
   },
 ];

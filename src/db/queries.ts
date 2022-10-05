@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { Nft } from './types';
+import { Nft, Token } from './types';
 
 export const getNft = (conn: Connection, nft: Nft) => {
   const NftModel = conn.model<Nft>('Nft');
@@ -34,4 +34,22 @@ export const clearDb = async (conn: Connection) => {
   const NftModel = conn.model<Nft>('Nft');
 
   await NftModel.deleteMany({}).exec();
+};
+
+export const getAqRektguys = async (conn: Connection) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  const rektguy = await NftModel.findOne({ collectionSlug: 'rektguy' }).exec();
+
+  return rektguy?.tokens || null;
+};
+
+export const updateAqRektguys = async (conn: Connection, tokens: Token[]) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  const query = NftModel.findOneAndUpdate({ collectionSlug: 'rektguy' }, tokens, {
+    new: true,
+  }).exec();
+
+  return query;
 };
