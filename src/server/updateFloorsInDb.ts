@@ -54,7 +54,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
 
   if (fetchMethod === FetchMethod.openSeaTraitScrape) {
     const newFloor = await scrapeTrait(collectionSlug, nft.query);
-    nft.price = newFloor;
+    if (newFloor) nft.price = newFloor;
     nft.lastUpdated = new Date();
     return updateNft(conn, nft);
   }

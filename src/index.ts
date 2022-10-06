@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, TextChannel, User } from 'discord.js';
+import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
 import { getEmbed } from './server/embed';

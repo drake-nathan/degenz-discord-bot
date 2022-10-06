@@ -13,6 +13,7 @@ export const getEmbed = async () => {
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
+  rektguy[0].specialTraitFloors.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   const rld = nfts.filter((nft) => nft.name === 'Red Lite District')[0];
   const rldEditions = nfts.filter(
     (nft) => nft.sectionSlug === Section.rld && nft.name !== 'Red Lite District',

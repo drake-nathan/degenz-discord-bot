@@ -39,14 +39,14 @@ export const nfts: Nft[] = [
     mintDate: new Date('2022-05-01'),
     specialTraitFloors: [
       {
-        name: 'Laser Eyes',
-        query:
-          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=Laser%20Eyes',
-      },
-      {
         name: 'Blue Beams',
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=Blue%20Beams',
+      },
+      {
+        name: 'Laser Eyes',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=Laser%20Eyes',
       },
       {
         name: 'Golden Girls',
@@ -62,6 +62,21 @@ export const nfts: Nft[] = [
         name: 'Candles Inverted',
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Background&search[stringTraits][0][values][0]=Candles%20Inverted',
+      },
+      {
+        name: 'Saturn Shades',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=Saturn%20Shades',
+      },
+      {
+        name: 'Sharp Teeth',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Teeth&search[stringTraits][0][values][0]=Sharp%20Aquamarine&search[stringTraits][0][values][1]=Sharp%20Cantaloupe&search[stringTraits][0][values][2]=Sharp%20Crimson&search[stringTraits][0][values][3]=Sharp%20Toxic&search[stringTraits][0][values][4]=Sharp%20Violet',
+      },
+      {
+        name: 'Conical',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Headgear&search[stringTraits][0][values][0]=Conical%20Aquamarine&search[stringTraits][0][values][1]=Conical%20Cantaloupe&search[stringTraits][0][values][2]=Conical%20Crimson&search[stringTraits][0][values][3]=Conical%20Toxic&search[stringTraits][0][values][4]=Conical%20Violet',
       },
     ],
     tokens: [
