@@ -47,29 +47,29 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
   }
 };
 
-export const scrapeFoundation = async () => {
-  const url = 'https://foundation.app/@OSF/foundation/131480';
+// export const scrapeFoundation = async () => {
+//   const url = 'https://foundation.app/@OSF/foundation/131480';
 
-  try {
-    const response = await axios.get(url);
-    const $ = cheerio.load(response.data);
+//   try {
+//     const response = await axios.get(url);
+//     const $ = cheerio.load(response.data);
 
-    const price = $('h2').toArray();
-    return price;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
-        console.error('Scraping was blocked by Cloudflare.');
-        return 'N/A';
-      }
-      console.error(axiosError.response?.data);
-    }
-    console.error(error);
-  }
-};
+//     const price = $('h2').toArray();
+//     return price;
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       const axiosError = error as AxiosError;
+//       if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
+//         console.error('Scraping was blocked by Cloudflare.');
+//         return 'N/A';
+//       }
+//       console.error(axiosError.response?.data);
+//     }
+//     console.error(error);
+//   }
+// };
 
-scrapeFoundation().then(console.log);
+// scrapeFoundation().then(console.log);
 
 // export const scrapeSuperRare = async () => {
 //   dotenv.config();

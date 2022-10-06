@@ -3,6 +3,15 @@ import { Nft, FetchMethod, Section } from './types';
 
 export const nfts: Nft[] = [
   {
+    name: 'Degenz Access Pass',
+    collectionSlug: 'degenzaccesspass',
+    address: '0xA56d1B415Cb4B23e76910bb8c2F5A0a5B2C86a87',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaApi,
+    sectionSlug: Section.singles,
+    mintDate: new Date('2022-06-01'),
+  },
+  {
     name: 'Degenz',
     collectionSlug: 'degenz',
     address: '0xfb9e9e7150cCebFe42D58de1989C5283d0EAAB2e',
@@ -19,15 +28,6 @@ export const nfts: Nft[] = [
     fetchMethod: FetchMethod.openSeaApi,
     sectionSlug: Section.singles,
     mintDate: new Date('2021-08-01'),
-  },
-  {
-    name: 'Degenz Access Pass',
-    collectionSlug: 'degenzaccesspass',
-    address: '0xA56d1B415Cb4B23e76910bb8c2F5A0a5B2C86a87',
-    contractType: 'ERC1155',
-    fetchMethod: FetchMethod.openSeaApi,
-    sectionSlug: Section.singles,
-    mintDate: new Date('2022-06-01'),
   },
   {
     name: 'rektguy',

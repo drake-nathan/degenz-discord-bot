@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
+import { Client, GatewayIntentBits, TextChannel, User } from 'discord.js';
 import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
 import { getEmbed } from './server/embed';
@@ -22,7 +22,8 @@ const updateEmbed = async () => {
 
   const embed = await getEmbed();
 
-  const lastMsg = (await channel.messages.fetch({ limit: 1 })).first();
+  const messages = await channel.messages.fetch();
+  const lastMsg = messages.filter((m) => m.author.id === client.user?.id).first();
 
   if (lastMsg) {
     lastMsg.edit({ embeds: [embed] });
