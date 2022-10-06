@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 import { Connection } from 'mongoose';
 import { connectionFactory } from '../db/connectionFactory';
@@ -17,28 +18,24 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
     if (newFloor) nft.price = newFloor;
 
     if (specialTraitFloors) {
-      const newSpecialTraitFloors = await Promise.all(
-        specialTraitFloors.map(async (trait) => {
-          let shouldUpdateTrait: boolean = true;
+      for await (const trait of specialTraitFloors) {
+        let shouldUpdateTrait: boolean = true;
 
-          if (trait.lastUpdated) {
-            shouldUpdateTrait =
-              new Date().getTime() -
-                new Date(specialTraitFloors[0].lastUpdated).getTime() >
-              1000 * 60 * 60;
-          }
+        if (trait.lastUpdated) {
+          shouldUpdateTrait =
+            new Date().getTime() - new Date(specialTraitFloors[0].lastUpdated).getTime() >
+            1000 * 60 * 60;
+        }
 
-          if (shouldUpdateTrait) {
-            const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
-            if (newFloor) trait.price = newSpecialTraitFloor;
+        if (shouldUpdateTrait) {
+          const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
+          if (newSpecialTraitFloor) {
+            trait.price = newSpecialTraitFloor;
             trait.lastUpdated = new Date();
           }
-
-          return trait;
-        }),
-      );
-
-      nft.specialTraitFloors = newSpecialTraitFloors;
+          break;
+        }
+      }
     }
 
     return updateNft(conn, nft);
@@ -47,7 +44,10 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   if (fetchMethod === FetchMethod.openSeaScrape) {
     if (tokenId) {
       const newFloor = await scrapeToken(address, tokenId);
-      if (newFloor) nft.price = newFloor;
+      if (newFloor) {
+        nft.price = newFloor;
+        nft.lastUpdated = new Date();
+      }
       return updateNft(conn, nft);
     }
 
@@ -55,8 +55,10 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
       const newTokens = await Promise.all(
         tokens.map(async (token) => {
           const newFloor = await scrapeToken(address, token.tokenId);
-          if (newFloor) token.price = newFloor;
-          token.lastUpdated = new Date();
+          if (newFloor) {
+            token.price = newFloor;
+            token.lastUpdated = new Date();
+          }
           return token;
         }),
       );
@@ -67,8 +69,10 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
 
   if (fetchMethod === FetchMethod.openSeaTraitScrape) {
     const newFloor = await scrapeTrait(collectionSlug, nft.query);
-    if (newFloor) nft.price = newFloor;
-    nft.lastUpdated = new Date();
+    if (newFloor) {
+      nft.price = newFloor;
+      nft.lastUpdated = new Date();
+    }
     return updateNft(conn, nft);
   }
 };
@@ -80,7 +84,9 @@ export const updateFloorsInDb = async () => {
 
   const nfts = await getAllNfts(conn);
 
-  await Promise.all(nfts.map(async (nft) => updateNftPriceInDb(conn, nft)));
+  for await (const nft of nfts) {
+    await updateNftPriceInDb(conn, nft);
+  }
 
   await conn.close();
 };

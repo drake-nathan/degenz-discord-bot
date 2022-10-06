@@ -34,7 +34,7 @@ const updateEmbed = async () => {
   console.info(`Updated embed at ${new Date()}`);
 };
 
-const updateDbCron = new CronJob('*/5 * * * *', async () => {
+const updateDbCron = new CronJob('*/10 * * * *', async () => {
   await updateFloorsInDb();
 });
 

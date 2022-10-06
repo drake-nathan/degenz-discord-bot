@@ -16,11 +16,12 @@ export const scrapeToken = async (contractAddress?: string, tokenId?: number) =>
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
         console.error('Scraping was blocked by Cloudflare.');
-        return undefined;
       }
       console.error(axiosError.response?.data);
+      return undefined;
     }
     console.error(error);
+    return undefined;
   }
 };
 
@@ -39,11 +40,12 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
         console.error('Scraping was blocked by Cloudflare.');
-        return undefined;
       }
       console.error(axiosError.response?.data);
+      return undefined;
     }
     console.error(error);
+    return undefined;
   }
 };
 
