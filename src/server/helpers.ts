@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export const formatPrice = (price: string, name?: string): string => {
   const numPrice = Number(price);
 
@@ -16,3 +18,5 @@ export const formatPrice = (price: string, name?: string): string => {
 
   return formattedPrice;
 };
+
+// export const handleAxiosError = (error: AxiosError): void => {};

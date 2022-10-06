@@ -16,7 +16,7 @@ export const scrapeToken = async (contractAddress?: string, tokenId?: number) =>
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
         console.error('Scraping was blocked by Cloudflare.');
-        return 'N/A';
+        return undefined;
       }
       console.error(axiosError.response?.data);
     }
@@ -39,7 +39,7 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
         console.error('Scraping was blocked by Cloudflare.');
-        return 'N/A';
+        return undefined;
       }
       console.error(axiosError.response?.data);
     }

@@ -9,18 +9,31 @@ import { scrapeToken, scrapeTrait } from '../fetches/scrapers';
 const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   const { fetchMethod, collectionSlug, address, tokenId, tokens, specialTraitFloors } =
     nft;
+
   nft.lastUpdated = new Date();
 
   if (fetchMethod === FetchMethod.openSeaApi) {
     const newFloor = await fetchCollectionFloor(collectionSlug);
-    nft.price = newFloor;
+    if (newFloor) nft.price = newFloor;
 
     if (specialTraitFloors) {
       const newSpecialTraitFloors = await Promise.all(
         specialTraitFloors.map(async (trait) => {
-          const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
-          trait.price = newSpecialTraitFloor;
-          trait.lastUpdated = new Date();
+          let shouldUpdateTrait: boolean = true;
+
+          if (trait.lastUpdated) {
+            shouldUpdateTrait =
+              new Date().getTime() -
+                new Date(specialTraitFloors[0].lastUpdated).getTime() >
+              1000 * 60 * 60;
+          }
+
+          if (shouldUpdateTrait) {
+            const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
+            if (newFloor) trait.price = newSpecialTraitFloor;
+            trait.lastUpdated = new Date();
+          }
+
           return trait;
         }),
       );
@@ -34,7 +47,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   if (fetchMethod === FetchMethod.openSeaScrape) {
     if (tokenId) {
       const newFloor = await scrapeToken(address, tokenId);
-      nft.price = newFloor;
+      if (newFloor) nft.price = newFloor;
       return updateNft(conn, nft);
     }
 
@@ -42,7 +55,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
       const newTokens = await Promise.all(
         tokens.map(async (token) => {
           const newFloor = await scrapeToken(address, token.tokenId);
-          token.price = newFloor;
+          if (newFloor) token.price = newFloor;
           token.lastUpdated = new Date();
           return token;
         }),
@@ -61,6 +74,8 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
 };
 
 export const updateFloorsInDb = async () => {
+  console.info('Updating floors in db');
+
   const conn = await connectionFactory();
 
   const nfts = await getAllNfts(conn);

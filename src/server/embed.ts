@@ -2,14 +2,18 @@ import { EmbedBuilder } from 'discord.js';
 import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts } from '../db/queries';
 import { Section } from '../db/types';
+import { getEthPrice, getGasPrice } from '../fetches/etherscan';
 import { formatPrice } from './helpers';
 
 export const getEmbed = async () => {
-  console.info('Updating floors embed...');
+  console.info('Updating embed...');
 
   const conn = await connectionFactory();
 
   const nfts = await getAllNfts(conn);
+
+  const gasPrice = await getGasPrice();
+  const ethPrice = await getEthPrice();
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
@@ -32,7 +36,12 @@ export const getEmbed = async () => {
 
   let message: string = '';
 
-  message += `${singles
+  message += `ETH: \u200b ${new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(ethPrice)} \u200b \u200b Gas: \u200b ${gasPrice} wei\n`;
+
+  message += `\n${singles
     .map((nft) => `**${nft.name}:** \u200b ${formatPrice(nft.price)}`)
     .join('\n')}\n`;
 
@@ -64,7 +73,7 @@ export const getEmbed = async () => {
   message += `\nOther editions and 1/1s will be added soon.`;
 
   const embed = new EmbedBuilder()
-    .setTitle('Degenz/OSF Floor Prices')
+    .setTitle('Degenz Dashboard')
     .setThumbnail(
       'https://i.seadn.io/gcs/files/0d5f1b200a067938f507cbe12bbbabc2.jpg?auto=format',
     )
