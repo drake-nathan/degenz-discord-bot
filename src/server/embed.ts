@@ -13,7 +13,10 @@ export const getEmbed = async () => {
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
-  rektguy[0].specialTraitFloors.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  const rektguyTraits = rektguy[0].specialTraitFloors.filter(
+    (trait) => trait.price !== undefined,
+  );
+  rektguyTraits.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   const rld = nfts.filter((nft) => nft.name === 'Red Lite District')[0];
   const rldEditions = nfts.filter(
     (nft) => nft.sectionSlug === Section.rld && nft.name !== 'Red Lite District',
@@ -34,7 +37,7 @@ export const getEmbed = async () => {
     .join('\n')}\n`;
 
   message += `\n**${rektguy[0].name}:** \u200b ${formatPrice(rektguy[0].price)}`;
-  message += `\n${rektguy[0].specialTraitFloors
+  message += `\n${rektguyTraits
     .map((trait) => `- ${trait.name}: \u200b ${formatPrice(trait.price)}`)
     .join('\n')}\n`;
 
