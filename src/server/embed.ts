@@ -17,6 +17,9 @@ export const getEmbed = async () => {
   const rldEditions = nfts.filter(
     (nft) => nft.sectionSlug === Section.rld && nft.name !== 'Red Lite District',
   );
+  const rldEditionsFullSetPrice = rldEditions[0].tokens
+    .reduce((acc, token) => acc + parseFloat(token.price), 0)
+    .toString();
   const sevenDeadlySins = nfts.filter(
     (nft) => nft.sectionSlug === Section.sevenDeadlySins,
   )[0];
@@ -35,7 +38,9 @@ export const getEmbed = async () => {
     .join('\n')}\n`;
 
   message += `\n**${rld.name}:** \u200b ${formatPrice(rld.price)}`;
-  message += `\n**RLD Editions:**`;
+  message += `\n**RLD Editions:** \u200b ${formatPrice(
+    rldEditionsFullSetPrice,
+  )} (Full Set)`;
   message += `\n${rldEditions[0].tokens
     .map(
       (edition, i) => `${i + 1}. ${edition.name}: \u200b ${formatPrice(edition.price)}`,

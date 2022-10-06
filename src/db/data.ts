@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-loss-of-precision */
 import { Nft, FetchMethod, Section } from './types';
 
 export const nfts: Nft[] = [
@@ -244,5 +245,24 @@ export const nfts: Nft[] = [
     contractType: 'ERC721',
     fetchMethod: FetchMethod.superRareScrape,
     sectionSlug: Section.oneOfOnes,
+  },
+  {
+    name: 'rekt6529',
+    collectionSlug: 'thememes6529',
+    address: '0x33fd426905f149f8376e227d0c9d3340aad17af1',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaScrape,
+    sectionSlug: Section.editions,
+    tokenId: 5,
+  },
+  {
+    name: `joke's on you`,
+    collectionSlug: 'dodart',
+    address: '0x495f947276749ce646f68ac8c248420045cb7b5e',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaTraitScrape,
+    sectionSlug: Section.editions,
+    query:
+      '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Artist&search[stringTraits][0][values][0]=OSF',
   },
 ];
