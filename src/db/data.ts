@@ -280,4 +280,13 @@ export const nfts: Nft[] = [
     query:
       '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Artist&search[stringTraits][0][values][0]=OSF',
   },
+  {
+    name: 'Rolling',
+    collectionSlug: 'alphadoggg-signature',
+    address: '0x48dacfb883a452af47404650f7538e6e0893cc56',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaScrape,
+    sectionSlug: Section.editions,
+    tokenId: 4,
+  },
 ];

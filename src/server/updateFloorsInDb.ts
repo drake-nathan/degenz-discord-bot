@@ -33,7 +33,6 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
             trait.price = newSpecialTraitFloor;
             trait.lastUpdated = new Date();
           }
-          break;
         }
       }
     }

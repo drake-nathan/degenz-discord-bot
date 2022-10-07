@@ -45,12 +45,12 @@ const updateEmbedCron = new CronJob('*/1 * * * *', async () => {
 client.once('ready', async () => {
   console.info('Bot online!');
 
-  // const conn = await connectionFactory();
-  // await clearDb(conn);
-  // console.info('Cleared db');
-  // await buildDb(conn, nfts);
-  // console.info('Built db');
-  // await conn.close();
+  const conn = await connectionFactory();
+  await clearDb(conn);
+  console.info('Cleared db');
+  await buildDb(conn, nfts);
+  console.info('Built db');
+  await conn.close();
 
   await updateFloorsInDb();
   console.info('Fetched prices, added to db');

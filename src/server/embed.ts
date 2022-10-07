@@ -16,6 +16,7 @@ export const getEmbed = async () => {
   const ethPrice = await getEthPrice();
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
+  singles.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
   const rektguyTraits = rektguy[0].specialTraitFloors.filter(
     (trait) => trait.price !== undefined,
@@ -32,6 +33,7 @@ export const getEmbed = async () => {
     (nft) => nft.sectionSlug === Section.sevenDeadlySins,
   )[0];
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
+  editions.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
 
   let message: string = '';
