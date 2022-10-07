@@ -49,7 +49,7 @@ export const getEmbed = async () => {
 
   message += `\n**${rektguy[0].name}:** \u200b ${formatPrice(rektguy[0].price)}`;
   message += `\n${rektguyTraits
-    .slice(9)
+    .slice(0, 9)
     .map((trait) => `- ${trait.name}: \u200b ${formatPrice(trait.price)}`)
     .join('\n')}\n`;
 
