@@ -78,6 +78,16 @@ export const nfts: Nft[] = [
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Headgear&search[stringTraits][0][values][0]=Conical%20Aquamarine&search[stringTraits][0][values][1]=Conical%20Cantaloupe&search[stringTraits][0][values][2]=Conical%20Crimson&search[stringTraits][0][values][3]=Conical%20Toxic&search[stringTraits][0][values][4]=Conical%20Violet',
       },
+      {
+        name: 'Robotic',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Robotic%20Aquamarine&search[stringTraits][0][values][1]=Robotic%20Cantaloupe&search[stringTraits][0][values][2]=Robotic%20Crimson&search[stringTraits][0][values][3]=Robotic%20Toxic&search[stringTraits][0][values][4]=Robotic%20Violet',
+      },
+      {
+        name: 'mfer',
+        query:
+          '?search[stringTraits][0][name]=Logo&search[stringTraits][0][values][0]=mfer',
+      },
     ],
     tokens: [
       {
