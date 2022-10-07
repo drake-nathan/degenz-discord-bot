@@ -88,6 +88,16 @@ export const nfts: Nft[] = [
         query:
           '?search[stringTraits][0][name]=Logo&search[stringTraits][0][values][0]=mfer',
       },
+      {
+        name: 'Bananas',
+        query:
+          '?search[stringTraits][0][name]=Liquid&search[stringTraits][0][values][0]=Banana',
+      },
+      {
+        name: '3d Glasses',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=3D%20Glasses',
+      },
     ],
     tokens: [
       {
