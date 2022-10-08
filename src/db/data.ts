@@ -265,6 +265,15 @@ export const nfts: Nft[] = [
     sectionSlug: Section.editions,
   },
   {
+    name: 'sangsom & lemonade',
+    collectionSlug: 'osfs-distillery',
+    query: '?search[query]=sangsom&search[sortAscending]=true&search[sortBy]=UNIT_PRICE',
+    address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
+    contractType: 'ERC721',
+    fetchMethod: FetchMethod.openSeaTraitScrape,
+    sectionSlug: Section.editions,
+  },
+  {
     name: 'the rekt lotto 1',
     collectionSlug: 'osf',
     address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
