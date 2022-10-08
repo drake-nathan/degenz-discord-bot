@@ -35,26 +35,38 @@ const updateEmbed = async () => {
 };
 
 const updateDbCron = new CronJob('*/10 * * * *', async () => {
-  await updateFloorsInDb();
+  try {
+    await updateFloorsInDb();
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 const updateEmbedCron = new CronJob('*/1 * * * *', async () => {
-  await updateEmbed();
+  try {
+    await updateEmbed();
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 client.once('ready', async () => {
   console.info('Bot online!');
 
-  const conn = await connectionFactory();
-  await clearDb(conn);
-  console.info('Cleared db');
-  await buildDb(conn, nfts);
-  console.info('Built db');
-  await conn.close();
+  try {
+    const conn = await connectionFactory();
+    await clearDb(conn);
+    console.info('Cleared db');
+    await buildDb(conn, nfts);
+    console.info('Built db');
+    await conn.close();
 
-  await updateFloorsInDb();
-  console.info('Fetched prices, added to db');
-  await updateEmbed();
+    await updateFloorsInDb();
+    console.info('Fetched prices, added to db');
+    await updateEmbed();
+  } catch (error) {
+    console.error(error);
+  }
 
   updateDbCron.start();
   updateEmbedCron.start();

@@ -27,6 +27,7 @@ export const getEmbed = async () => {
     (nft) => nft.sectionSlug === Section.rld && nft.name !== 'Red Lite District',
   );
   const rldEditionsFullSetPrice = rldEditions[0].tokens
+    .filter(Boolean)
     .reduce((acc, token) => acc + parseFloat(token.price), 0)
     .toString();
   const sevenDeadlySins = nfts.filter(
