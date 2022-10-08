@@ -26,7 +26,7 @@ const updateEmbed = async () => {
   const lastMsg = messages.filter((m) => m.author.id === client.user?.id).first();
 
   if (lastMsg) {
-    lastMsg.edit({ embeds: [embed] });
+    await lastMsg.edit({ embeds: [embed] });
   } else {
     await channel.send({ embeds: [embed] });
   }
