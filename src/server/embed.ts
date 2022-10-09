@@ -1,40 +1,57 @@
 import { EmbedBuilder } from 'discord.js';
 import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts } from '../db/queries';
-import { Section } from '../db/types';
+import { Nft, Section } from '../db/types';
 import { getEthPrice, getGasPrice } from '../fetches/etherscan';
 import { formatPrice } from './helpers';
 
 export const getEmbed = async () => {
   console.info('Updating embed...');
 
-  const conn = await connectionFactory();
+  let nfts: Nft[];
 
-  const nfts = await getAllNfts(conn);
+  try {
+    const conn = await connectionFactory();
+    nfts = await getAllNfts(conn);
+  } catch (error) {
+    console.error(error);
+    return;
+  }
 
-  const gasPrice = await getGasPrice();
   const ethPrice = await getEthPrice();
+  const gasPrice = await getGasPrice();
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
   singles.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
   const rektguyTraits = rektguy[0].specialTraitFloors.filter(
     (trait) => trait.price !== undefined,
   );
   rektguyTraits.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
   const rld = nfts.filter((nft) => nft.name === 'Red Lite District')[0];
   const rldEditions = nfts.filter(
     (nft) => nft.sectionSlug === Section.rld && nft.name !== 'Red Lite District',
   );
   const rldEditionsFullSetPrice = rldEditions[0].tokens
+    .map((token) => parseFloat(token.price))
     .filter(Boolean)
-    .reduce((acc, token) => acc + parseFloat(token.price), 0)
+    .reduce((acc, price) => acc + price, 0)
     .toString();
+
   const sevenDeadlySins = nfts.filter(
     (nft) => nft.sectionSlug === Section.sevenDeadlySins,
   )[0];
+  const sinsFullSetPrice = sevenDeadlySins.tokens
+    .map((token) => parseFloat(token.price))
+    .filter(Boolean)
+    .reduce((acc, price) => acc + price, 0)
+    .toString();
+
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   editions.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
   // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
 
   let message: string = '';
@@ -64,7 +81,7 @@ export const getEmbed = async () => {
     )
     .join('\n')}\n`;
 
-  message += `\n**7 Deadly Sins:**`;
+  message += `\n**7 Deadly Sins:** \u200b ${formatPrice(sinsFullSetPrice)} (Full Set)`;
   message += `\n${sevenDeadlySins.tokens
     .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
     .join('\n')}\n`;
