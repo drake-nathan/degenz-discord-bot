@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-loss-of-precision */
 import { Nft, FetchMethod, Section } from './types';
 
 export const nfts: Nft[] = [
@@ -102,6 +101,16 @@ export const nfts: Nft[] = [
         name: '3d Glasses',
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=3D%20Glasses',
+      },
+      {
+        name: 'Serum',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Liquid&search[stringTraits][0][values][0]=Serum',
+      },
+      {
+        name: "Diamond Dolly's",
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Diamond',
       },
     ],
     tokens: [
@@ -267,7 +276,7 @@ export const nfts: Nft[] = [
     address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaTraitScrape,
-    sectionSlug: Section.editions,
+    sectionSlug: Section.distillery,
   },
   {
     name: 'sangsom & lemonade',
@@ -276,7 +285,7 @@ export const nfts: Nft[] = [
     address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaTraitScrape,
-    sectionSlug: Section.editions,
+    sectionSlug: Section.distillery,
   },
   {
     name: 'the rekt lotto 1',

@@ -13,6 +13,7 @@ export enum Section {
   rektguy = 'rektguy',
   rld = 'rld',
   sevenDeadlySins = 'sevenDeadlySins',
+  distillery = 'distillery',
   editions = 'editions',
   oneOfOnes = 'oneOfOnes',
 }

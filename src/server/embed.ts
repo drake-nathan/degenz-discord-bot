@@ -49,6 +49,8 @@ export const getEmbed = async () => {
     .reduce((acc, price) => acc + price, 0)
     .toString();
 
+  const distillery = nfts.filter((nft) => nft.sectionSlug === Section.distillery);
+
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   editions.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 
@@ -84,6 +86,11 @@ export const getEmbed = async () => {
   message += `\n**7 Deadly Sins:** \u200b ${formatPrice(sinsFullSetPrice)} (Full Set)`;
   message += `\n${sevenDeadlySins.tokens
     .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
+    .join('\n')}\n`;
+
+  message += `\n**OSF's Distillery:**`;
+  message += `\n${distillery
+    .map((nft) => `- ${nft.name}: \u200b ${formatPrice(nft.price)}`)
     .join('\n')}\n`;
 
   message += `\n**Misc Editions:**`;
