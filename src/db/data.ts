@@ -112,6 +112,21 @@ export const nfts: Nft[] = [
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Diamond',
       },
+      {
+        name: 'Strawberries',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Strawberry%20Laces',
+      },
+      {
+        name: 'Clowns',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Mask&search[stringTraits][0][values][0]=Clown',
+      },
+      {
+        name: 'Grills',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Teeth&search[stringTraits][0][values][0]=Silver%20Grills&search[stringTraits][0][values][1]=Gold%20Grills',
+      },
     ],
     tokens: [
       {
