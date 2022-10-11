@@ -13,6 +13,7 @@ export const getEmbed = async () => {
   try {
     const conn = await connectionFactory();
     nfts = await getAllNfts(conn);
+    await conn.close();
   } catch (error) {
     console.error(error);
     return;
