@@ -27,6 +27,7 @@ export const buildDb = async (conn: Connection, nfts: Nft[]) => {
   const NftModel = conn.model<Nft>('Nft');
 
   const query = await NftModel.create(nfts);
+
   return query;
 };
 

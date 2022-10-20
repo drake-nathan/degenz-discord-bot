@@ -35,7 +35,7 @@ const scrapePuppeteer = async (itemCount: number) => {
   page.setViewport({ width: 1280, height: 926 });
 
   await page.goto('https://opensea.io/collection/rektguy', {
-    waitUntil: 'networkidle2',
+    waitUntil: 'load',
   });
 
   let items = [];
@@ -50,7 +50,6 @@ const scrapePuppeteer = async (itemCount: number) => {
     previousHeight = (await page.evaluate('document.body.scrollHeight')) as number;
     await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
     await page.waitForFunction(`document.body.scrollHeight > ${previousHeight}`);
-    await page.waitForTimeout(800);
   }
 
   await browser.close();
@@ -58,4 +57,4 @@ const scrapePuppeteer = async (itemCount: number) => {
   return items;
 };
 
-scrapePuppeteer(20).then(console.info).catch(console.error);
+scrapePuppeteer(15).then(console.info).catch(console.error);

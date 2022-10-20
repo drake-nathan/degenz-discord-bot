@@ -4,7 +4,7 @@ import { Connection } from 'mongoose';
 import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts, updateNft } from '../db/queries';
 import { FetchMethod, Nft } from '../db/types';
-import { fetchCollectionFloor } from '../fetches/fetchCollectionFloor';
+import { fetchOpenSeaCollectionFloor, fetchPepe } from '../fetches/apis';
 import { scrapeToken, scrapeTrait } from '../fetches/scrapers';
 
 const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
@@ -14,7 +14,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   nft.lastUpdated = new Date();
 
   if (fetchMethod === FetchMethod.openSeaApi) {
-    const newFloor = await fetchCollectionFloor(collectionSlug);
+    const newFloor = await fetchOpenSeaCollectionFloor(collectionSlug);
     if (newFloor) nft.price = newFloor;
 
     if (specialTraitFloors) {
@@ -70,6 +70,15 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
     const newFloor = await scrapeTrait(collectionSlug, nft.query);
     if (newFloor) {
       nft.price = newFloor;
+      nft.lastUpdated = new Date();
+    }
+    return updateNft(conn, nft);
+  }
+
+  if (fetchMethod === FetchMethod.pepeApi) {
+    const newFloor = await fetchPepe(collectionSlug);
+    if (newFloor) {
+      nft.price = newFloor.toString();
       nft.lastUpdated = new Date();
     }
     return updateNft(conn, nft);

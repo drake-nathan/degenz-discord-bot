@@ -347,4 +347,11 @@ export const nfts: Nft[] = [
     sectionSlug: Section.editions,
     tokenId: 4,
   },
+  {
+    name: 'GHOSTPEPES',
+    collectionSlug: 'GHOSTPEPES',
+    contractType: 'PEPE',
+    fetchMethod: FetchMethod.pepeApi,
+    sectionSlug: Section.editions,
+  },
 ];

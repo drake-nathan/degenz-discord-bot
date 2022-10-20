@@ -6,6 +6,7 @@ export enum FetchMethod {
   openSeaTraitScrape = 'openSeaTraitScrape',
   superRareScrape = 'superRareScrape',
   foundationScrape = 'foundationScrape',
+  pepeApi = 'pepeApi',
 }
 
 export enum Section {
@@ -40,8 +41,8 @@ export interface Nft {
   _id?: ObjectId;
   name: string;
   collectionSlug: string;
-  address: string;
-  contractType: 'ERC721' | 'ERC1155';
+  address?: string;
+  contractType: 'ERC721' | 'ERC1155' | 'PEPE';
   fetchMethod: FetchMethod;
   sectionSlug: string;
   mintDate?: Date;

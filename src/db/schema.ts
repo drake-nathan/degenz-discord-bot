@@ -4,7 +4,7 @@ import { Nft } from './types';
 export const nftSchema = new Schema<Nft>({
   name: { type: String, required: true },
   collectionSlug: { type: String, required: true },
-  address: { type: String, required: true },
+  address: { type: String },
   contractType: { type: String, required: true },
   fetchMethod: { type: String, required: true },
   sectionSlug: { type: String, required: true },
