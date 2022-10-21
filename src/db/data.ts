@@ -108,7 +108,7 @@ export const nfts: Nft[] = [
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Liquid&search[stringTraits][0][values][0]=Serum',
       },
       {
-        name: "Diamond Dolly's",
+        name: 'Diamond Dollies',
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Diamond',
       },
