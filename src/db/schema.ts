@@ -3,7 +3,7 @@ import { Nft } from './types';
 
 export const nftSchema = new Schema<Nft>({
   name: { type: String, required: true },
-  collectionSlug: { type: String, required: true },
+  collectionSlug: { type: String },
   address: { type: String },
   contractType: { type: String, required: true },
   fetchMethod: { type: String, required: true },
@@ -21,6 +21,8 @@ export const nftSchema = new Schema<Nft>({
       query: { type: String, required: true },
       price: { type: String },
       lastUpdated: { type: Date },
+      rugRole: { type: String },
+      supply: { type: Number },
     },
   ],
   tokens: [

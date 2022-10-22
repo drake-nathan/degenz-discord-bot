@@ -7,6 +7,7 @@ export enum FetchMethod {
   superRareScrape = 'superRareScrape',
   foundationScrape = 'foundationScrape',
   pepeApi = 'pepeApi',
+  dexScreener = 'dexScreener',
 }
 
 export enum Section {
@@ -19,11 +20,21 @@ export enum Section {
   oneOfOnes = 'oneOfOnes',
 }
 
+export enum RugRole {
+  Standard = 'Standard',
+  Scarce2 = 'Scarce2',
+  Scarce1 = 'Scarce1',
+  Rare2 = 'Rare2',
+  Rare1 = 'Rare1',
+}
+
 export interface TraitFloor {
   name: string;
   query: string;
   price?: string;
   lastUpdated?: Date;
+  rugRole?: RugRole;
+  supply?: number;
 }
 
 export interface Token {
@@ -40,9 +51,9 @@ export interface Token {
 export interface Nft {
   _id?: ObjectId;
   name: string;
-  collectionSlug: string;
+  collectionSlug?: string;
   address?: string;
-  contractType: 'ERC721' | 'ERC1155' | 'PEPE';
+  contractType: 'ERC721' | 'ERC1155' | 'PEPE' | 'ERC20';
   fetchMethod: FetchMethod;
   sectionSlug: string;
   mintDate?: Date;

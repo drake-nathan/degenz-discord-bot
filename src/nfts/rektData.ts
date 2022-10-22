@@ -1,6 +1,6 @@
-import { Nft, FetchMethod, Section } from './types';
+import { Nft, FetchMethod, Section } from '../db/types';
 
-export const nfts: Nft[] = [
+export const rektNfts: Nft[] = [
   {
     name: 'Degenz Access Pass',
     collectionSlug: 'degenzaccesspass',

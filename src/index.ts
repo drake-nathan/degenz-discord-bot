@@ -1,11 +1,6 @@
-import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
 import * as dotenv from 'dotenv';
-import { CronJob } from 'cron';
-import { getEmbed } from './server/embed';
-import { updateFloorsInDb } from './server/updateFloorsInDb';
-import { buildDb, clearDb } from './db/queries';
-import { connectionFactory } from './db/connectionFactory';
-import { nfts } from './db/data';
+import { ready } from './bot/listeners/ready';
 
 dotenv.config();
 const token = process.env.TOKEN;
@@ -16,61 +11,7 @@ if (!token) {
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const updateEmbed = async () => {
-  const channelId = process.env.CHANNEL_ID;
-  const channel = (await client.channels.fetch(channelId)) as TextChannel;
-
-  const embed = await getEmbed();
-
-  const messages = await channel.messages.fetch();
-  const lastMsg = messages.filter((m) => m.author.id === client.user?.id).first();
-
-  if (lastMsg) {
-    await lastMsg.edit({ embeds: [embed] });
-  } else {
-    await channel.send({ embeds: [embed] });
-  }
-
-  console.info(`Updated embed at ${new Date()}`);
-};
-
-const updateDbCron = new CronJob('*/10 * * * *', async () => {
-  try {
-    await updateFloorsInDb();
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-const updateEmbedCron = new CronJob('*/1 * * * *', async () => {
-  try {
-    await updateEmbed();
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-client.once('ready', async () => {
-  console.info('Bot online!');
-
-  try {
-    const conn = await connectionFactory();
-    await clearDb(conn);
-    console.info('Cleared db');
-    await buildDb(conn, nfts);
-    console.info('Built db');
-    await conn.close();
-
-    await updateFloorsInDb();
-    console.info('Fetched prices, added to db');
-    await updateEmbed();
-  } catch (error) {
-    console.error(error);
-  }
-
-  updateDbCron.start();
-  updateEmbedCron.start();
-});
+ready(client);
 
 client.login(token);
 

@@ -1,12 +1,12 @@
 import { EmbedBuilder } from 'discord.js';
-import { connectionFactory } from '../db/connectionFactory';
-import { getAllNfts } from '../db/queries';
-import { Nft, Section } from '../db/types';
-import { getEthPrice, getGasPrice } from '../fetches/etherscan';
-import { formatPrice } from './helpers';
+import { connectionFactory } from '../../db/connectionFactory';
+import { getAllNfts } from '../../db/queries';
+import { Nft, Section } from '../../db/types';
+import { getEthPrice, getGasPrice } from '../../fetches/etherscan';
+import { formatPrice } from '../helpers';
 
-export const getEmbed = async () => {
-  console.info('Updating embed...');
+export const getRektEmbed = async () => {
+  console.info('Updating rekt embed...');
 
   let nfts: Nft[];
 

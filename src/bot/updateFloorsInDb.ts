@@ -30,7 +30,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
         if (shouldUpdateTrait) {
           const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
           if (newSpecialTraitFloor) {
-            trait.price = newSpecialTraitFloor;
+            trait.price = newSpecialTraitFloor.price;
             trait.lastUpdated = new Date();
           }
         }
@@ -69,7 +69,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
   if (fetchMethod === FetchMethod.openSeaTraitScrape) {
     const newFloor = await scrapeTrait(collectionSlug, nft.query);
     if (newFloor) {
-      nft.price = newFloor;
+      nft.price = newFloor.price;
       nft.lastUpdated = new Date();
     }
     return updateNft(conn, nft);

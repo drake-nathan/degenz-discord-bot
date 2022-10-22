@@ -33,8 +33,9 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
 
+    const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
     const price = $('.Price--amount').first().text();
-    return price;
+    return { price, supply };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
