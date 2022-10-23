@@ -2,10 +2,11 @@ import { CronJob } from 'cron';
 import { Client } from 'discord.js';
 import { connectionFactory } from '../../db/connectionFactory';
 import { clearDb, buildDb } from '../../db/queries';
-import { updateRektEmbed } from '../embeds/updateEmbeds';
+import { updateRektEmbed, updateRugEmbed } from '../embeds/updateEmbeds';
 import { updateFloorsInDb } from '../updateFloorsInDb';
 import { rektNfts } from '../../nfts/rektData';
 import { rugNfts } from '../../nfts/rugData';
+import { addRolesToRugs } from '../helpers';
 
 export const ready = async (client: Client) => {
   const updateDbCron = new CronJob('*/10 * * * *', async () => {
@@ -18,7 +19,8 @@ export const ready = async (client: Client) => {
 
   const updateEmbedCron = new CronJob('*/1 * * * *', async () => {
     try {
-      await updateRektEmbed(client);
+      // await updateRektEmbed(client);
+      await updateRugEmbed(client);
     } catch (error) {
       console.error(error);
     }
@@ -28,22 +30,23 @@ export const ready = async (client: Client) => {
     console.info('Bot online!');
 
     try {
-      const conn = await connectionFactory();
-      await clearDb(conn);
-      console.info('Cleared db');
-      await buildDb(conn, rektNfts);
-      await buildDb(conn, rugNfts);
-      console.info('Built db');
-      await conn.close();
+      // const conn = await connectionFactory();
+      // await clearDb(conn);
+      // console.info('Cleared db');
+      // // await buildDb(conn, rektNfts);
+      // await buildDb(conn, addRolesToRugs(rugNfts));
+      // console.info('Built db');
+      // await conn.close();
 
-      await updateFloorsInDb();
-      console.info('Fetched prices, added to db');
-      await updateRektEmbed(client);
+      // await updateFloorsInDb();
+      // console.info('Fetched prices, added to db');
+      // await updateRektEmbed(client);
+      await updateRugEmbed(client);
     } catch (error) {
       console.error(error);
     }
 
-    updateDbCron.start();
-    updateEmbedCron.start();
+    // updateDbCron.start();
+    // updateEmbedCron.start();
   });
 };

@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { Nft, Token } from './types';
+import { Nft, Token, Server } from './types';
 
 export const getNft = (conn: Connection, nft: Nft) => {
   const NftModel = conn.model<Nft>('Nft');
@@ -11,6 +11,18 @@ export const getAllNfts = (conn: Connection) => {
   const NftModel = conn.model<Nft>('Nft');
 
   return NftModel.find({}).exec();
+};
+
+export const getRektNfts = (conn: Connection) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  return NftModel.find({ server: Server.rekt }).exec();
+};
+
+export const getRugNfts = (conn: Connection) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  return NftModel.find({ server: Server.rug }).exec();
 };
 
 export const updateNft = async (conn: Connection, nft: Nft) => {

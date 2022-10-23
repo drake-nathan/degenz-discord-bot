@@ -1,9 +1,9 @@
 import { EmbedBuilder } from 'discord.js';
 import { connectionFactory } from '../../db/connectionFactory';
-import { getAllNfts } from '../../db/queries';
+import { getRektNfts } from '../../db/queries';
 import { Nft, Section } from '../../db/types';
 import { getEthPrice, getGasPrice } from '../../fetches/etherscan';
-import { formatPrice } from '../helpers';
+import { formatEthPrice, sortPriceDesc } from '../helpers';
 
 export const getRektEmbed = async () => {
   console.info('Updating rekt embed...');
@@ -12,7 +12,7 @@ export const getRektEmbed = async () => {
 
   try {
     const conn = await connectionFactory();
-    nfts = await getAllNfts(conn);
+    nfts = await getRektNfts(conn);
     await conn.close();
   } catch (error) {
     console.error(error);
@@ -23,13 +23,13 @@ export const getRektEmbed = async () => {
   const gasPrice = await getGasPrice();
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
-  singles.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  singles.sort(sortPriceDesc);
 
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
   const rektguyTraits = rektguy[0].specialTraitFloors.filter(
     (trait) => trait.price !== undefined,
   );
-  rektguyTraits.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  rektguyTraits.sort(sortPriceDesc);
 
   const rld = nfts.filter((nft) => nft.name === 'Red Lite District')[0];
   const rldEditions = nfts.filter(
@@ -53,7 +53,7 @@ export const getRektEmbed = async () => {
   const distillery = nfts.filter((nft) => nft.sectionSlug === Section.distillery);
 
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
-  editions.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  editions.sort(sortPriceDesc);
 
   // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
 
@@ -62,41 +62,42 @@ export const getRektEmbed = async () => {
   message += `ETH: \u200b ${new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-  }).format(ethPrice)} \u200b \u200b Gas: \u200b ${gasPrice} wei\n`;
+  }).format(ethPrice)} \u200b \u200b Gas: \u200b ${gasPrice} gwei\n`;
 
   message += `\n${singles
-    .map((nft) => `**${nft.name}:** \u200b ${formatPrice(nft.price)}`)
+    .map((nft) => `**${nft.name}:** \u200b ${formatEthPrice(nft.price)}`)
     .join('\n')}\n`;
 
-  message += `\n**${rektguy[0].name}:** \u200b ${formatPrice(rektguy[0].price)}`;
+  message += `\n**${rektguy[0].name}:** \u200b ${formatEthPrice(rektguy[0].price)}`;
   message += `\n${rektguyTraits
     .slice(0, 10)
-    .map((trait) => `- ${trait.name}: \u200b ${formatPrice(trait.price)}`)
+    .map((trait) => `- ${trait.name}: \u200b ${formatEthPrice(trait.price)}`)
     .join('\n')}\n`;
 
-  message += `\n**${rld.name}:** \u200b ${formatPrice(rld.price)}`;
-  message += `\n**RLD Editions:** \u200b ${formatPrice(
+  message += `\n**${rld.name}:** \u200b ${formatEthPrice(rld.price)}`;
+  message += `\n**RLD Editions:** \u200b ${formatEthPrice(
     rldEditionsFullSetPrice,
   )} (Full Set)`;
   message += `\n${rldEditions[0].tokens
     .map(
-      (edition, i) => `${i + 1}. ${edition.name}: \u200b ${formatPrice(edition.price)}`,
+      (edition, i) =>
+        `${i + 1}. ${edition.name}: \u200b ${formatEthPrice(edition.price)}`,
     )
     .join('\n')}\n`;
 
-  message += `\n**7 Deadly Sins:** \u200b ${formatPrice(sinsFullSetPrice)} (Full Set)`;
+  message += `\n**7 Deadly Sins:** \u200b ${formatEthPrice(sinsFullSetPrice)} (Full Set)`;
   message += `\n${sevenDeadlySins.tokens
-    .map((sin) => `- ${sin.name}: \u200b ${formatPrice(sin.price, sin.name)}`)
+    .map((sin) => `- ${sin.name}: \u200b ${formatEthPrice(sin.price, sin.name)}`)
     .join('\n')}\n`;
 
   message += `\n**OSF's Distillery:**`;
   message += `\n${distillery
-    .map((nft) => `- ${nft.name}: \u200b ${formatPrice(nft.price)}`)
+    .map((nft) => `- ${nft.name}: \u200b ${formatEthPrice(nft.price)}`)
     .join('\n')}\n`;
 
   message += `\n**Misc Editions:**`;
   message += `\n${editions
-    .map((nft) => `- ${nft.name}: \u200b ${formatPrice(nft.price)}`)
+    .map((nft) => `- ${nft.name}: \u200b ${formatEthPrice(nft.price)}`)
     .join('\n')}\n`;
 
   message += `\nOther editions and 1/1s will be added soon.`;

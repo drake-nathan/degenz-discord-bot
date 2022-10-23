@@ -1,4 +1,4 @@
-import { Nft, FetchMethod, Section } from '../db/types';
+import { Nft, FetchMethod, Section, Server } from '../db/types';
 
 export const rektNfts: Nft[] = [
   {
@@ -7,6 +7,7 @@ export const rektNfts: Nft[] = [
     address: '0xA56d1B415Cb4B23e76910bb8c2F5A0a5B2C86a87',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
     sectionSlug: Section.singles,
     mintDate: new Date('2022-06-01'),
   },
@@ -16,6 +17,7 @@ export const rektNfts: Nft[] = [
     address: '0xfb9e9e7150cCebFe42D58de1989C5283d0EAAB2e',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
     sectionSlug: Section.singles,
     mintDate: new Date('2021-07-01'),
   },
@@ -25,6 +27,7 @@ export const rektNfts: Nft[] = [
     address: '0xAFd867667eC6D2Be5BdCd41D76Da7e96A1f67F18',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
     sectionSlug: Section.singles,
     mintDate: new Date('2021-08-01'),
   },
@@ -34,6 +37,7 @@ export const rektNfts: Nft[] = [
     address: '0xB852c6b5892256C264Cc2C888eA462189154D8d7',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
     sectionSlug: Section.rektguy,
     mintDate: new Date('2022-05-01'),
     specialTraitFloors: [
@@ -167,6 +171,7 @@ export const rektNfts: Nft[] = [
     address: '0x513cD71defC801b9c1aA763dB47b5df223da77a2',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
     sectionSlug: Section.rld,
     mintDate: new Date('2022-02-01'),
   },
@@ -176,6 +181,7 @@ export const rektNfts: Nft[] = [
     address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.rld,
     tokens: [
       {
@@ -234,6 +240,7 @@ export const rektNfts: Nft[] = [
     address: '0x8297d8e55C27AA6CE2d8a65b1Fa3Debb02410efC',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.sevenDeadlySins,
     tokens: [
       {
@@ -280,6 +287,7 @@ export const rektNfts: Nft[] = [
     address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.oneOfOnes,
     tokenId: 2,
   },
@@ -291,6 +299,7 @@ export const rektNfts: Nft[] = [
     address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaTraitScrape,
+    server: Server.rekt,
     sectionSlug: Section.distillery,
   },
   {
@@ -300,6 +309,7 @@ export const rektNfts: Nft[] = [
     address: '0x26c7de7d475AAD40Cf8211c0e9Ad8469aa4E6878',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaTraitScrape,
+    server: Server.rekt,
     sectionSlug: Section.distillery,
   },
   {
@@ -308,6 +318,7 @@ export const rektNfts: Nft[] = [
     address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.editions,
     tokenId: 10,
   },
@@ -317,6 +328,7 @@ export const rektNfts: Nft[] = [
     address: '0xb932a70A57673d89f4acfFBE830E8ed7f75Fb9e0',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.superRareScrape,
+    server: Server.rekt,
     sectionSlug: Section.oneOfOnes,
   },
   {
@@ -325,6 +337,7 @@ export const rektNfts: Nft[] = [
     address: '0x33fd426905f149f8376e227d0c9d3340aad17af1',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.editions,
     tokenId: 5,
   },
@@ -334,6 +347,7 @@ export const rektNfts: Nft[] = [
     address: '0x495f947276749ce646f68ac8c248420045cb7b5e',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaTraitScrape,
+    server: Server.rekt,
     sectionSlug: Section.editions,
     query:
       '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Artist&search[stringTraits][0][values][0]=OSF',
@@ -344,6 +358,7 @@ export const rektNfts: Nft[] = [
     address: '0x48dacfb883a452af47404650f7538e6e0893cc56',
     contractType: 'ERC1155',
     fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
     sectionSlug: Section.editions,
     tokenId: 4,
   },
@@ -352,6 +367,7 @@ export const rektNfts: Nft[] = [
     collectionSlug: 'GHOSTPEPES',
     contractType: 'PEPE',
     fetchMethod: FetchMethod.pepeApi,
+    server: Server.rekt,
     sectionSlug: Section.editions,
   },
 ];

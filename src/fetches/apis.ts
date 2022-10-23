@@ -23,3 +23,15 @@ export const fetchPepe = async (collectionSlug: string) => {
     console.error(error);
   }
 };
+
+export const fetchDex = async (address: string) => {
+  const url = `https://api.dexscreener.com/latest/dex/pairs/ethereum/${address}`;
+
+  try {
+    const { data } = await axios.get(url);
+
+    return data.pairs[0].priceUsd as string;
+  } catch (error) {
+    console.error(error);
+  }
+};

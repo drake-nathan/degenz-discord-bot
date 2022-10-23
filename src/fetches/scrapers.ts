@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
+import { Role } from '../db/types';
 
 export const scrapeToken = async (contractAddress?: string, tokenId?: number) => {
   const rootUrl = 'https://opensea.io/assets/ethereum';
@@ -35,7 +36,44 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
     const price = $('.Price--amount').first().text();
-    return { price, supply };
+    return { price, supply: Number(supply) };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === 503 || axiosError.response?.status === 403) {
+        console.error('Scraping was blocked by Cloudflare.');
+      }
+      console.error(axiosError.response?.data);
+      return undefined;
+    }
+    console.error(error);
+    return undefined;
+  }
+};
+
+export const scrapeRug = async (
+  collectionSlug: string,
+  role: string,
+  memeSlug: string,
+) => {
+  const roleSlugs = ['Standard', 'Scarce%202', 'Scarce%201', 'Rare%202', 'Rare%201'];
+  const roleMap = {
+    Standard: roleSlugs[0],
+    'Scarce 2': roleSlugs[1],
+    'Scarce 1': roleSlugs[2],
+    'Rare 2': roleSlugs[3],
+    'Rare 1': roleSlugs[4],
+  };
+
+  const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=${roleMap[role]}&search[stringTraits][1][name]=Meme&search[stringTraits][1][values][0]=${memeSlug}`;
+
+  try {
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
+    const price = $('.Price--amount').first().text();
+    return { price, supply: Number(supply) };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;

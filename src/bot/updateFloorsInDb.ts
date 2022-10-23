@@ -3,13 +3,20 @@
 import { Connection } from 'mongoose';
 import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts, updateNft } from '../db/queries';
-import { FetchMethod, Nft } from '../db/types';
-import { fetchOpenSeaCollectionFloor, fetchPepe } from '../fetches/apis';
-import { scrapeToken, scrapeTrait } from '../fetches/scrapers';
+import { FetchMethod, Nft, Role } from '../db/types';
+import { fetchDex, fetchOpenSeaCollectionFloor, fetchPepe } from '../fetches/apis';
+import { scrapeRug, scrapeToken, scrapeTrait } from '../fetches/scrapers';
 
 const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
-  const { fetchMethod, collectionSlug, address, tokenId, tokens, specialTraitFloors } =
-    nft;
+  const {
+    fetchMethod,
+    collectionSlug,
+    address,
+    tokenId,
+    tokens,
+    specialTraitFloors,
+    rugs,
+  } = nft;
 
   nft.lastUpdated = new Date();
 
@@ -32,6 +39,30 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
           if (newSpecialTraitFloor) {
             trait.price = newSpecialTraitFloor.price;
             trait.lastUpdated = new Date();
+          }
+        }
+      }
+    }
+
+    if (rugs) {
+      for await (const rug of rugs) {
+        const { openseaSlug, roles } = rug;
+
+        for await (const role of roles) {
+          let shouldUpdateRole: boolean = true;
+
+          if (role.lastUpdated) {
+            shouldUpdateRole =
+              new Date().getTime() - new Date(role.lastUpdated).getTime() >
+              1000 * 60 * 30;
+          }
+
+          if (shouldUpdateRole) {
+            const newRole = await scrapeRug(collectionSlug, role.roleName, openseaSlug);
+            if (newRole) {
+              role.price = newRole.price;
+              role.lastUpdated = new Date();
+            }
           }
         }
       }
@@ -77,6 +108,15 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
 
   if (fetchMethod === FetchMethod.pepeApi) {
     const newFloor = await fetchPepe(collectionSlug);
+    if (newFloor) {
+      nft.price = newFloor.toString();
+      nft.lastUpdated = new Date();
+    }
+    return updateNft(conn, nft);
+  }
+
+  if (fetchMethod === FetchMethod.dexScreener) {
+    const newFloor = await fetchDex(address);
     if (newFloor) {
       nft.price = newFloor.toString();
       nft.lastUpdated = new Date();

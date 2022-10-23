@@ -10,6 +10,11 @@ export enum FetchMethod {
   dexScreener = 'dexScreener',
 }
 
+export enum Server {
+  rekt = 'rekt',
+  rug = 'rug',
+}
+
 export enum Section {
   singles = 'singles',
   rektguy = 'rektguy',
@@ -18,14 +23,7 @@ export enum Section {
   distillery = 'distillery',
   editions = 'editions',
   oneOfOnes = 'oneOfOnes',
-}
-
-export enum RugRole {
-  Standard = 'Standard',
-  Scarce2 = 'Scarce2',
-  Scarce1 = 'Scarce1',
-  Rare2 = 'Rare2',
-  Rare1 = 'Rare1',
+  rugs = 'rugs',
 }
 
 export interface TraitFloor {
@@ -33,7 +31,6 @@ export interface TraitFloor {
   query: string;
   price?: string;
   lastUpdated?: Date;
-  rugRole?: RugRole;
   supply?: number;
 }
 
@@ -48,13 +45,33 @@ export interface Token {
   lastSoldPrice?: string;
 }
 
+export type RoleName = 'Standard' | 'Scarce 2' | 'Scarce 1' | 'Rare 2' | 'Rare 1';
+
+export interface Role {
+  _id?: ObjectId;
+  rugName: string;
+  roleName: RoleName;
+  price?: string;
+  supply?: number;
+  lastUpdated?: Date;
+}
+
+export interface Rug {
+  name: string;
+  openseaSlug: string;
+  roles?: Role[];
+}
+
+export type ContractType = 'ERC20' | 'ERC721' | 'ERC1155' | 'PEPE';
+
 export interface Nft {
   _id?: ObjectId;
   name: string;
   collectionSlug?: string;
   address?: string;
-  contractType: 'ERC721' | 'ERC1155' | 'PEPE' | 'ERC20';
+  contractType: ContractType;
   fetchMethod: FetchMethod;
+  server: Server;
   sectionSlug: string;
   mintDate?: Date;
   price?: string;
@@ -64,6 +81,7 @@ export interface Nft {
   isRldDrop?: boolean;
   specialTraitFloors?: TraitFloor[];
   tokens?: Token[];
+  rugs?: Rug[];
   tokenId?: number;
   query?: string;
 }

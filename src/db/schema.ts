@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { Nft } from './types';
+import { Nft, Role } from './types';
 
 export const nftSchema = new Schema<Nft>({
   name: { type: String, required: true },
@@ -7,6 +7,7 @@ export const nftSchema = new Schema<Nft>({
   address: { type: String },
   contractType: { type: String, required: true },
   fetchMethod: { type: String, required: true },
+  server: { type: String, required: true },
   sectionSlug: { type: String, required: true },
   price: { type: String },
   lastUpdated: { type: Date },
@@ -21,7 +22,6 @@ export const nftSchema = new Schema<Nft>({
       query: { type: String, required: true },
       price: { type: String },
       lastUpdated: { type: Date },
-      rugRole: { type: String },
       supply: { type: Number },
     },
   ],
@@ -35,6 +35,21 @@ export const nftSchema = new Schema<Nft>({
       lastUpdated: { type: Date },
       lastSoldDate: { type: Date },
       lastSoldPrice: { type: String },
+    },
+  ],
+  rugs: [
+    {
+      name: { type: String, required: true },
+      openseaSlug: { type: String, required: true },
+      roles: [
+        {
+          rugName: { type: String, required: true },
+          roleName: { type: String, required: true },
+          price: { type: String },
+          supply: { type: Number },
+          lastUpdated: { type: Date },
+        },
+      ],
     },
   ],
 });
