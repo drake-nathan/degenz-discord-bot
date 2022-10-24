@@ -26,6 +26,28 @@ export const rugNfts: Nft[] = [
     fetchMethod: FetchMethod.openSeaApi,
     server: Server.rug,
     sectionSlug: Section.rugs,
+    specialTraitFloors: [
+      {
+        name: 'Scarce 2',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=Scarce%202',
+      },
+      {
+        name: 'Scarce 1',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=Scarce%201',
+      },
+      {
+        name: 'Rare 2',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=Rare%202',
+      },
+      {
+        name: 'Rare 1',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=Rare%201',
+      },
+    ],
     rugs: [
       {
         name: 'Blue chip (Punks)',

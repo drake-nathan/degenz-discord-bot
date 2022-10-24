@@ -27,16 +27,54 @@ export const getRugEmbed = async () => {
 
   const rugCollection = nfts.filter((nft) => nft.sectionSlug === Section.rugs)[0];
   const { rugs } = rugCollection;
-  const standard = rugs.map((rug) => mapRolesByRole(rug.roles, 'Standard'));
-  const standardFloor = standard.sort(sortPriceAsc)[0].price;
-  const scarce2 = rugs.map((rug) => mapRolesByRole(rug.roles, 'Scarce 2'));
-  const scarce2Floor = scarce2.sort(sortPriceAsc)[0].price;
-  const scarce1 = rugs.map((rug) => mapRolesByRole(rug.roles, 'Scarce 1'));
-  const scarce1Floor = scarce1.sort(sortPriceAsc)[0].price;
-  const rare2 = rugs.map((rug) => mapRolesByRole(rug.roles, 'Rare 2'));
-  const rare2Floor = rare2.sort(sortPriceAsc)[0].price;
+
+  const standardFloor = rugCollection.price;
+  const scarce2Floor = rugCollection.specialTraitFloors.find(
+    (trait) => trait.name === 'Scarce 2',
+  ).price;
+  const scarce1Floor = rugCollection.specialTraitFloors.find(
+    (trait) => trait.name === 'Scarce 1',
+  ).price;
+  const rare2Floor = rugCollection.specialTraitFloors.find(
+    (trait) => trait.name === 'Rare 2',
+  ).price;
+  const rare1Floor = rugCollection.specialTraitFloors.find(
+    (trait) => trait.name === 'Rare 1',
+  ).price;
+
+  const standard = rugs
+    .map((rug) => mapRolesByRole(rug.roles, 'Standard'))
+    .filter((r) => r.price >= standardFloor)
+    .sort(sortPriceAsc);
+  const scarce2 = rugs
+    .map((rug) => mapRolesByRole(rug.roles, 'Scarce 2'))
+    .filter((r) => r.price >= scarce2Floor)
+    .sort(sortPriceAsc);
+  const scarce1 = rugs
+    .map((rug) => mapRolesByRole(rug.roles, 'Scarce 1'))
+    .filter((r) => r.price >= scarce1Floor)
+    .sort(sortPriceAsc);
+  const rare2 = rugs
+    .map((rug) => mapRolesByRole(rug.roles, 'Rare 2'))
+    .filter((r) => r.price >= rare2Floor)
+    .sort(sortPriceAsc);
 
   let message: string = '';
+
+  message += `ETH: \u200b ${new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(ethPrice)} \u200b \u200b Gas: \u200b ${gasPrice} gwei\n`;
+
+  message += `\n**Membership Pass:** \u200b ${formatEthPrice(membershipPass.price)}`;
+  message += `\n**$RUG Token:** \u200b ${formatUsdPrice(rugToken.price)}\n`;
+
+  message += `\n**Genesis NFT**`;
+  message += `\n**Standard:** \u200b ${formatEthPrice(standardFloor)}`;
+  message += `\n**Scarce 2:** \u200b ${formatEthPrice(scarce2Floor)}`;
+  message += `\n**Scarce 1:** \u200b ${formatEthPrice(scarce1Floor)}`;
+  message += `\n**Rare 2:** \u200b ${formatEthPrice(rare2Floor)}`;
+  message += `\n**Rare 1:** \u200b ${formatEthPrice(rare1Floor)}\n`;
 
   message += `\n**Standard:**`;
   message += `\n${standard
@@ -57,20 +95,6 @@ export const getRugEmbed = async () => {
   message += `\n${rare2
     .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)}`)
     .join('\n')}\n`;
-
-  message += `\n**Genesis NFT**`;
-  message += `\n**Standard:** \u200b ${formatEthPrice(standardFloor)}`;
-  message += `\n**Scarce 2:** \u200b ${formatEthPrice(scarce2Floor)}`;
-  message += `\n**Scarce 1:** \u200b ${formatEthPrice(scarce1Floor)}`;
-  message += `\n**Rare 2:** \u200b ${formatEthPrice(rare2Floor)}\n`;
-
-  message += `\n**Membership Pass:** \u200b ${formatEthPrice(membershipPass.price)}`;
-  message += `\n**$RUG Token:** \u200b ${formatUsdPrice(rugToken.price)}\n`;
-
-  message += `\nETH: \u200b ${new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(ethPrice)} \u200b \u200b Gas: \u200b ${gasPrice} gwei`;
 
   const embed = new EmbedBuilder()
     .setTitle('Rug Radio Dashboard')

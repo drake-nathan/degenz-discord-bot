@@ -40,7 +40,7 @@ export const ready = async (client: Client) => {
 
       // await updateFloorsInDb();
       // console.info('Fetched prices, added to db');
-      // await updateRektEmbed(client);
+      // // await updateRektEmbed(client);
       await updateRugEmbed(client);
     } catch (error) {
       console.error(error);

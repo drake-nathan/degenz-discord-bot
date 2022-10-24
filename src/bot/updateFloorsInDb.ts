@@ -3,7 +3,7 @@
 import { Connection } from 'mongoose';
 import { connectionFactory } from '../db/connectionFactory';
 import { getAllNfts, updateNft } from '../db/queries';
-import { FetchMethod, Nft, Role } from '../db/types';
+import { FetchMethod, Nft } from '../db/types';
 import { fetchDex, fetchOpenSeaCollectionFloor, fetchPepe } from '../fetches/apis';
 import { scrapeRug, scrapeToken, scrapeTrait } from '../fetches/scrapers';
 
@@ -31,7 +31,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
         if (trait.lastUpdated) {
           shouldUpdateTrait =
             new Date().getTime() - new Date(specialTraitFloors[0].lastUpdated).getTime() >
-            1000 * 60 * 60;
+            1000 * 60 * 30;
         }
 
         if (shouldUpdateTrait) {

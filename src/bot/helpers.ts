@@ -60,7 +60,7 @@ export const formatUsdPrice = (price: string): string => {
   const centsPrice = parseFloat((numPrice * 100).toFixed(1));
   const pennyPrice = parseFloat(numPrice.toFixed(5));
 
-  let finalFormattedPrice = `${usdPrice} (${centsPrice} cents)`;
+  let finalFormattedPrice = `${usdPrice} \u200b (${centsPrice} cents)`;
 
   if (numPrice < 0.01) finalFormattedPrice = `$${pennyPrice}`;
 
