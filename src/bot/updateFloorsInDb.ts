@@ -38,6 +38,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
           const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
           if (newSpecialTraitFloor) {
             trait.price = newSpecialTraitFloor.price;
+            trait.supply = newSpecialTraitFloor.supply;
             trait.lastUpdated = new Date();
           }
         }
@@ -61,6 +62,7 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
             const newRole = await scrapeRug(collectionSlug, role.roleName, openseaSlug);
             if (newRole) {
               role.price = newRole.price;
+              role.supply = newRole.supply;
               role.lastUpdated = new Date();
             }
           }

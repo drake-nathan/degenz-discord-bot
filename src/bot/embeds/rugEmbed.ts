@@ -3,7 +3,13 @@ import { connectionFactory } from '../../db/connectionFactory';
 import { getRugNfts } from '../../db/queries';
 import { Nft, Section } from '../../db/types';
 import { getEthPrice, getGasPrice } from '../../fetches/etherscan';
-import { formatEthPrice, formatUsdPrice, mapRolesByRole, sortPriceAsc } from '../helpers';
+import {
+  formatEthPrice,
+  formatRugSection,
+  formatUsdPrice,
+  mapRolesByRole,
+  sortPriceAsc,
+} from '../helpers';
 
 export const getRugEmbed = async () => {
   console.info('Updating Rug embed...');
@@ -29,18 +35,14 @@ export const getRugEmbed = async () => {
   const { rugs } = rugCollection;
 
   const standardFloor = rugCollection.price;
-  const scarce2Floor = rugCollection.specialTraitFloors.find(
-    (trait) => trait.name === 'Scarce 2',
-  ).price;
-  const scarce1Floor = rugCollection.specialTraitFloors.find(
-    (trait) => trait.name === 'Scarce 1',
-  ).price;
-  const rare2Floor = rugCollection.specialTraitFloors.find(
-    (trait) => trait.name === 'Rare 2',
-  ).price;
-  const rare1Floor = rugCollection.specialTraitFloors.find(
-    (trait) => trait.name === 'Rare 1',
-  ).price;
+  const { price: scarce2Floor, supply: scarce2Supply } =
+    rugCollection.specialTraitFloors.find((trait) => trait.name === 'Scarce 2');
+  const { price: scarce1Floor, supply: scarce1Supply } =
+    rugCollection.specialTraitFloors.find((trait) => trait.name === 'Scarce 1');
+  const { price: rare2Floor, supply: rare2Supply } =
+    rugCollection.specialTraitFloors.find((trait) => trait.name === 'Rare 2');
+  const { price: rare1Floor, supply: rare1Supply } =
+    rugCollection.specialTraitFloors.find((trait) => trait.name === 'Rare 1');
 
   const standard = rugs
     .map((rug) => mapRolesByRole(rug.roles, 'Standard'))
@@ -77,23 +79,21 @@ export const getRugEmbed = async () => {
   message += `\n**Rare 1:** \u200b ${formatEthPrice(rare1Floor)}\n`;
 
   message += `\n**Standard:**`;
-  message += `\n${standard
-    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)}`)
-    .join('\n')}\n`;
+  message += formatRugSection(standard);
 
   message += `\n**Scarce 2:**`;
   message += `\n${scarce2
-    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)}`)
+    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)} \u200b`)
     .join('\n')}\n`;
 
   message += `\n**Scarce 1:**`;
   message += `\n${scarce1
-    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)}`)
+    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)} \u200b`)
     .join('\n')}\n`;
 
   message += `\n**Rare 2:**`;
   message += `\n${rare2
-    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)}`)
+    .map((rug) => `- ${rug.rugName}: \u200b ${formatEthPrice(rug.price)} \u200b `)
     .join('\n')}\n`;
 
   const embed = new EmbedBuilder()

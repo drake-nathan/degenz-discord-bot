@@ -73,3 +73,25 @@ export const mapRolesByRole = (roles: Role[], role: string) =>
 export const sortPriceDesc = (a, b) => parseFloat(b.price) - parseFloat(a.price);
 
 export const sortPriceAsc = (a, b) => parseFloat(a.price) - parseFloat(b.price);
+
+export const formatRugSection = (rugs: Role[]) => {
+  const longestRugName = [...rugs].sort((a, b) => b.rugName.length - a.rugName.length)[0];
+
+  const formatName = (name: string) => {
+    // const diff = longestRugName.rugName.length - name.length;
+    const spaces = ''; // '\u200b'.repeat(diff);
+    return `${name}${spaces}`;
+  };
+
+  return `\n${rugs
+    .map((rug) => {
+      const { rugName, price } = rug;
+
+      const formattedName = formatName(rugName);
+      const formattedPrice = formatEthPrice(price);
+      // const formattedSupply = Intl.NumberFormat().format(supply);
+
+      return `- ${formattedName}: \u200b ${formattedPrice}`;
+    })
+    .join('\n')}\n`;
+};

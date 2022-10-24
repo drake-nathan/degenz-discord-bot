@@ -342,7 +342,7 @@ export const rektNfts: Nft[] = [
     tokenId: 5,
   },
   {
-    name: `joke's on you`,
+    name: `joke's on you (deck of degen)`,
     collectionSlug: 'dodart',
     address: '0x495f947276749ce646f68ac8c248420045cb7b5e',
     contractType: 'ERC1155',
@@ -353,7 +353,7 @@ export const rektNfts: Nft[] = [
       '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Artist&search[stringTraits][0][values][0]=OSF',
   },
   {
-    name: 'Rolling',
+    name: 'Rolling (Alphadoggg)',
     collectionSlug: 'alphadoggg-signature',
     address: '0x48dacfb883a452af47404650f7538e6e0893cc56',
     contractType: 'ERC1155',
@@ -369,5 +369,15 @@ export const rektNfts: Nft[] = [
     fetchMethod: FetchMethod.pepeApi,
     server: Server.rekt,
     sectionSlug: Section.editions,
+  },
+  {
+    name: 'Stay Love (Space Fight)',
+    collectionSlug: 'space-fight-releases',
+    address: '0xf12fd10f278c1fb29a62d6338d050cf2832f8080',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
+    sectionSlug: Section.editions,
+    tokenId: 10003,
   },
 ];
