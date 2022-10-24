@@ -30,23 +30,23 @@ export const ready = async (client: Client) => {
     console.info('Bot online!');
 
     try {
-      // const conn = await connectionFactory();
-      // await clearDb(conn);
-      // console.info('Cleared db');
-      // await buildDb(conn, rektNfts);
-      // await buildDb(conn, addRolesToRugs(rugNfts));
-      // console.info('Built db');
-      // await conn.close();
+      const conn = await connectionFactory();
+      await clearDb(conn);
+      console.info('Cleared db');
+      await buildDb(conn, rektNfts);
+      await buildDb(conn, addRolesToRugs(rugNfts));
+      console.info('Built db');
+      await conn.close();
 
-      // await updateFloorsInDb();
-      // console.info('Fetched prices, added to db');
+      await updateFloorsInDb();
+      console.info('Fetched prices, added to db');
       await updateRektEmbed(client);
       await updateRugEmbed(client);
     } catch (error) {
       console.error(error);
     }
 
-    // updateDbCron.start();
-    // updateEmbedCron.start();
+    updateDbCron.start();
+    updateEmbedCron.start();
   });
 };
