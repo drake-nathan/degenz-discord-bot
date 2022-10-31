@@ -27,7 +27,7 @@ export const getRektEmbed = async () => {
 
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
   const rektguyTraits = rektguy[0].specialTraitFloors.filter(
-    (trait) => trait.price !== undefined,
+    (trait) => trait.price !== undefined && Number(trait.price) < 10,
   );
   rektguyTraits.sort(sortPriceDesc);
 
@@ -45,6 +45,7 @@ export const getRektEmbed = async () => {
     (nft) => nft.sectionSlug === Section.sevenDeadlySins,
   )[0];
   const sinsFullSetPrice = sevenDeadlySins.tokens
+    .filter((sin) => sin.name !== 'purgatorio')
     .map((token) => parseFloat(token.price))
     .filter(Boolean)
     .reduce((acc, price) => acc + price, 0)
@@ -70,7 +71,7 @@ export const getRektEmbed = async () => {
 
   message += `\n**${rektguy[0].name}:** \u200b ${formatEthPrice(rektguy[0].price)}`;
   message += `\n${rektguyTraits
-    .slice(0, 10)
+    .slice(0, 15)
     .map((trait) => `- ${trait.name}: \u200b ${formatEthPrice(trait.price)}`)
     .join('\n')}\n`;
 
@@ -99,8 +100,6 @@ export const getRektEmbed = async () => {
   message += `\n${editions
     .map((nft) => `- ${nft.name}: \u200b ${formatEthPrice(nft.price)}`)
     .join('\n')}\n`;
-
-  message += `\nOther editions and 1/1s will be added soon.`;
 
   const embed = new EmbedBuilder()
     .setTitle('Degenz Dashboard')

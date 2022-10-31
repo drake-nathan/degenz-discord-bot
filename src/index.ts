@@ -15,6 +15,6 @@ ready(client);
 
 client.login(token);
 
-client.on('error', (e) => console.error(e));
-client.on('warn', (e) => console.warn(e));
-client.on('debug', (e) => console.info(e));
+client.on('error', console.error);
+client.on('warn', console.warn);
+client.on('debug', console.info);

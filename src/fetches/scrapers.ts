@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
-import { Role } from '../db/types';
 
 export const scrapeToken = async (contractAddress?: string, tokenId?: number) => {
   const rootUrl = 'https://opensea.io/assets/ethereum';
@@ -11,7 +10,7 @@ export const scrapeToken = async (contractAddress?: string, tokenId?: number) =>
     const $ = cheerio.load(response.data);
 
     const price = $('.Price--amount').first().text();
-    return price;
+    return price.replace(/[^\d.-]/g, '');
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
@@ -36,7 +35,7 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
     const price = $('.Price--amount').first().text();
-    return { price, supply: Number(supply) };
+    return { price: price.replace(/[^\d.-]/g, ''), supply: Number(supply) };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
@@ -73,7 +72,7 @@ export const scrapeRug = async (
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
     const price = $('.Price--amount').first().text();
-    return { price, supply: Number(supply) };
+    return { price: price.replace(/[^\d.-]/g, ''), supply: Number(supply) };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
