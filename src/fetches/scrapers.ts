@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
-import { Role } from '../db/types';
 
 export const scrapeToken = async (contractAddress?: string, tokenId?: number) => {
   const rootUrl = 'https://opensea.io/assets/ethereum';
@@ -35,8 +34,13 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
     const $ = cheerio.load(response.data);
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
-    const price = $('.Price--amount').first().text();
-    return { price, supply: Number(supply) };
+    const prices = $('.Price--amount')
+      .toArray()
+      .map((element) => $(element).text());
+
+    const floorPrice = prices[0];
+
+    return { price: floorPrice, supply: Number(supply) };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
@@ -142,4 +146,7 @@ export const scrapeRug = async (
 //   }
 // };
 
-// scrapeSuperRare().then(console.info);
+scrapeTrait(
+  'rektguy',
+  '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Tiedye',
+).then(console.info);
