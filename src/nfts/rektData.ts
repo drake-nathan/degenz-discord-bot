@@ -131,6 +131,11 @@ export const rektNfts: Nft[] = [
         query:
           '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Teeth&search[stringTraits][0][values][0]=Silver%20Grills&search[stringTraits][0][values][1]=Gold%20Grills',
       },
+      {
+        name: 'Tiedye',
+        query:
+          '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Hoody&search[stringTraits][0][values][0]=Tiedye',
+      },
     ],
     tokens: [
       {
@@ -231,6 +236,12 @@ export const rektNfts: Nft[] = [
         name: 'radio city',
         rldDropNumber: 8,
         mintDate: new Date('2022-10-01'),
+      },
+      {
+        tokenId: 12,
+        name: 'insomnia',
+        rldDropNumber: 9,
+        mintDate: new Date('2022-11-01'),
       },
     ],
   },
