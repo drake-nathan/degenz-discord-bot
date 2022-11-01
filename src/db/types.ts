@@ -24,6 +24,7 @@ export enum Section {
   editions = 'editions',
   oneOfOnes = 'oneOfOnes',
   rugs = 'rugs',
+  cities = 'cities',
 }
 
 export interface TraitFloor {
@@ -75,6 +76,7 @@ export interface Nft {
   sectionSlug: string;
   mintDate?: Date;
   price?: string;
+  supply?: number;
   lastUpdated?: Date;
   lastSoldDate?: Date;
   lastSoldPrice?: string;

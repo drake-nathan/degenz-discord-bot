@@ -53,6 +53,14 @@ export const getRektEmbed = async () => {
 
   const distillery = nfts.filter((nft) => nft.sectionSlug === Section.distillery);
 
+  const cities = nfts.filter((nft) => nft.sectionSlug === Section.cities);
+  cities.sort(sortPriceDesc);
+  const citiesFullSetPrice = cities
+    .map((city) => parseFloat(city.price))
+    .filter(Boolean)
+    .reduce((acc, price) => acc + price, 0)
+    .toString();
+
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   editions.sort(sortPriceDesc);
 
@@ -94,6 +102,14 @@ export const getRektEmbed = async () => {
   message += `\n**OSF's Distillery:**`;
   message += `\n${distillery
     .map((nft) => `- ${nft.name}: \u200b ${formatEthPrice(nft.price)}`)
+    .join('\n')}\n`;
+
+  message += `\n**Rekt Cities:** \u200b ${formatEthPrice(citiesFullSetPrice)} (Full Set)`;
+  message += `\n${cities
+    .map(
+      (city) =>
+        `- ${city.name}: \u200b ${formatEthPrice(city.price)} \u200b (${city.supply})`,
+    )
     .join('\n')}\n`;
 
   message += `\n**Misc Editions:**`;

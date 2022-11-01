@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { Nft, Role } from './types';
+import { Nft } from './types';
 
 export const nftSchema = new Schema<Nft>({
   name: { type: String, required: true },
@@ -10,6 +10,7 @@ export const nftSchema = new Schema<Nft>({
   server: { type: String, required: true },
   sectionSlug: { type: String, required: true },
   price: { type: String },
+  supply: { type: Number },
   lastUpdated: { type: Date },
   isRldDrop: { type: Boolean },
   tokenId: { type: Number },
