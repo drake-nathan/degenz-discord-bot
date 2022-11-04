@@ -108,7 +108,9 @@ export const getRektEmbed = async () => {
   message += `\n${cities
     .map(
       (city) =>
-        `- ${city.name}: \u200b ${formatEthPrice(city.price)} \u200b (${city.supply})`,
+        `- ${city.name}: \u200b ${formatEthPrice(city.price)} \u200b (${
+          city.supply
+        }) \u200b ${(parseFloat(city.price) * city.supply).toFixed(1)}e`,
     )
     .join('\n')}\n`;
 
