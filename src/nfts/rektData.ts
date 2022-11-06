@@ -324,7 +324,7 @@ export const rektNfts: Nft[] = [
     sectionSlug: Section.distillery,
   },
   {
-    name: 'the rekt lotto 1',
+    name: 'thx for playing',
     collectionSlug: 'osf',
     address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
     contractType: 'ERC1155',
