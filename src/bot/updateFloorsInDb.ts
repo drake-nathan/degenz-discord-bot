@@ -37,8 +37,11 @@ const updateNftPriceInDb = async (conn: Connection, nft: Nft) => {
         if (shouldUpdateTrait) {
           const newSpecialTraitFloor = await scrapeTrait(collectionSlug, trait.query);
           if (newSpecialTraitFloor) {
-            trait.price = newSpecialTraitFloor.price;
-            trait.supply = newSpecialTraitFloor.supply;
+            // make sure a trait floor is higher than collection floor due to scrape error
+            if (Number(newFloor) > Number(newSpecialTraitFloor)) {
+              trait.price = newSpecialTraitFloor.price;
+              trait.supply = newSpecialTraitFloor.supply;
+            }
             trait.lastUpdated = new Date();
           }
         }

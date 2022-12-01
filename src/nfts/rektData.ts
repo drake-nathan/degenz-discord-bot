@@ -243,6 +243,12 @@ export const rektNfts: Nft[] = [
         rldDropNumber: 9,
         mintDate: new Date('2022-11-01'),
       },
+      {
+        tokenId: 13,
+        name: 'LAST ORDERS',
+        rldDropNumber: 10,
+        mintDate: new Date('2022-12-01'),
+      },
     ],
   },
   {

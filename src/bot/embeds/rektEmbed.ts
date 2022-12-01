@@ -6,8 +6,6 @@ import { formatEthPrice, sortPriceDesc } from '../helpers';
 import { Etherscan } from '../types';
 
 export const getRektEmbed = async (etherscan: Etherscan) => {
-  console.info('Updating rekt embed...');
-
   let nfts: Nft[];
 
   try {

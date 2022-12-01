@@ -12,8 +12,6 @@ import {
 import { Etherscan } from '../types';
 
 export const getRugEmbed = async (etherscan: Etherscan) => {
-  console.info('Updating Rug embed...');
-
   let nfts: Nft[];
 
   try {

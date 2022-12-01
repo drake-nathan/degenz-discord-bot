@@ -6,7 +6,7 @@ export const scrapeToken = async (contractAddress?: string, tokenId?: number) =>
   const url = `${rootUrl}/${contractAddress}/${tokenId}`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
     const $ = cheerio.load(response.data);
 
     const price = $('.Price--amount').first().text();
@@ -30,7 +30,7 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
   const url = `${rootUrl}/${collectionSlug}/${traitQueryString}`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
     const $ = cheerio.load(response.data);
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
@@ -50,6 +50,14 @@ export const scrapeTrait = async (collectionSlug: string, traitQueryString: stri
   }
 };
 
+// FIXME: Don't forget to remove this
+// scrapeTrait(
+//   'rektguy',
+//   '?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Eyes&search[stringTraits][0][values][0]=Laser%20Eyes',
+// )
+//   .then(console.info)
+//   .catch(console.error);
+
 export const scrapeRug = async (
   collectionSlug: string,
   role: string,
@@ -67,7 +75,7 @@ export const scrapeRug = async (
   const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=UNIT_PRICE&search[stringTraits][0][name]=Role&search[stringTraits][0][values][0]=${roleMap[role]}&search[stringTraits][1][name]=Meme&search[stringTraits][1][values][0]=${memeSlug}`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
     const $ = cheerio.load(response.data);
 
     const supply = $('p.sc-bdnxRM').first().text().replace(/\D/g, '');
