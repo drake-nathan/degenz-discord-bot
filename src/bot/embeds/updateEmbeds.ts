@@ -1,8 +1,9 @@
 import { Client, TextChannel } from 'discord.js';
+import { Etherscan } from '../types';
 import { getRektEmbed } from './rektEmbed';
 import { getRugEmbed } from './rugEmbed';
 
-export const updateRektEmbed = async (client: Client) => {
+export const updateRektEmbed = async (client: Client, etherscan: Etherscan) => {
   const channelIdRekt = process.env.CHANNEL_ID_REKT;
 
   if (!channelIdRekt) {
@@ -11,7 +12,7 @@ export const updateRektEmbed = async (client: Client) => {
 
   const channel = (await client.channels.fetch(channelIdRekt)) as TextChannel;
 
-  const embed = await getRektEmbed();
+  const embed = await getRektEmbed(etherscan);
 
   const messages = await channel.messages.fetch();
   const lastMsg = messages.filter((m) => m.author.id === client.user?.id).first();
@@ -25,7 +26,7 @@ export const updateRektEmbed = async (client: Client) => {
   console.info(`Updated rekt embed at ${new Date()}`);
 };
 
-export const updateRugEmbed = async (client: Client) => {
+export const updateRugEmbed = async (client: Client, etherscan: Etherscan) => {
   const channelIdRug = process.env.CHANNEL_ID_RUG;
 
   if (!channelIdRug) {
@@ -34,7 +35,7 @@ export const updateRugEmbed = async (client: Client) => {
 
   const channel = (await client.channels.fetch(channelIdRug)) as TextChannel;
 
-  const embed = await getRugEmbed();
+  const embed = await getRugEmbed(etherscan);
 
   const messages = await channel.messages.fetch();
   const lastMsg = messages.filter((m) => m.author.id === client.user?.id).first();

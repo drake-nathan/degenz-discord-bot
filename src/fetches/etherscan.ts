@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import axios from 'axios';
+import { Etherscan } from '../bot/types';
 
 dotenv.config();
 const rootUrl = 'https://api.etherscan.io/api';
@@ -45,4 +46,11 @@ export const getEthPrice = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getEtherscan = async (): Promise<Etherscan> => {
+  const ethPrice = await getEthPrice();
+  const gasPrice = await getGasPrice();
+
+  return { ethPrice, gasPrice };
 };

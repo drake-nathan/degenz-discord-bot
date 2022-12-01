@@ -2,10 +2,10 @@ import { EmbedBuilder } from 'discord.js';
 import { connectionFactory } from '../../db/connectionFactory';
 import { getRektNfts } from '../../db/queries';
 import { Nft, Section } from '../../db/types';
-import { getEthPrice, getGasPrice } from '../../fetches/etherscan';
 import { formatEthPrice, sortPriceDesc } from '../helpers';
+import { Etherscan } from '../types';
 
-export const getRektEmbed = async () => {
+export const getRektEmbed = async (etherscan: Etherscan) => {
   console.info('Updating rekt embed...');
 
   let nfts: Nft[];
@@ -19,8 +19,7 @@ export const getRektEmbed = async () => {
     return;
   }
 
-  const ethPrice = await getEthPrice();
-  const gasPrice = await getGasPrice();
+  const { ethPrice, gasPrice } = etherscan;
 
   const singles = nfts.filter((nft) => nft.sectionSlug === Section.singles);
   singles.sort(sortPriceDesc);

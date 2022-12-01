@@ -2,7 +2,6 @@ import { EmbedBuilder } from 'discord.js';
 import { connectionFactory } from '../../db/connectionFactory';
 import { getRugNfts } from '../../db/queries';
 import { Nft, Section } from '../../db/types';
-import { getEthPrice, getGasPrice } from '../../fetches/etherscan';
 import {
   formatEthPrice,
   formatRugSection,
@@ -10,8 +9,9 @@ import {
   mapRolesByRole,
   sortPriceAsc,
 } from '../helpers';
+import { Etherscan } from '../types';
 
-export const getRugEmbed = async () => {
+export const getRugEmbed = async (etherscan: Etherscan) => {
   console.info('Updating Rug embed...');
 
   let nfts: Nft[];
@@ -25,8 +25,7 @@ export const getRugEmbed = async () => {
     return;
   }
 
-  const ethPrice = await getEthPrice();
-  const gasPrice = await getGasPrice();
+  const { ethPrice, gasPrice } = etherscan;
 
   const membershipPass = nfts.find((nft) => nft.name === 'Membership Pass');
   const rugToken = nfts.find((nft) => nft.name === '$RUG Token');

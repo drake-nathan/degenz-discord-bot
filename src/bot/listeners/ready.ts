@@ -7,6 +7,8 @@ import { updateFloorsInDb } from '../updateFloorsInDb';
 import { rektNfts } from '../../nfts/rektData';
 import { rugNfts } from '../../nfts/rugData';
 import { addRolesToRugs } from '../helpers';
+import { getEtherscan } from '../../fetches/etherscan';
+import { Etherscan } from '../types';
 
 export const ready = async (client: Client) => {
   const updateDbCron = new CronJob('*/10 * * * *', async () => {
@@ -19,8 +21,10 @@ export const ready = async (client: Client) => {
 
   const updateEmbedCron = new CronJob('*/1 * * * *', async () => {
     try {
-      await updateRektEmbed(client);
-      await updateRugEmbed(client);
+      const etherscan = await getEtherscan();
+
+      await updateRektEmbed(client, etherscan);
+      await updateRugEmbed(client, etherscan);
     } catch (error) {
       console.error(error);
     }
@@ -30,18 +34,20 @@ export const ready = async (client: Client) => {
     console.info('Bot online!');
 
     try {
-      const conn = await connectionFactory();
-      await clearDb(conn);
-      console.info('Cleared db');
-      await buildDb(conn, rektNfts);
-      await buildDb(conn, addRolesToRugs(rugNfts));
-      console.info('Built db');
-      await conn.close();
+      // const conn = await connectionFactory();
+      // await clearDb(conn);
+      // console.info('Cleared db');
+      // await buildDb(conn, rektNfts);
+      // await buildDb(conn, addRolesToRugs(rugNfts));
+      // console.info('Built db');
+      // await conn.close();
+
+      const etherscan = await getEtherscan();
 
       await updateFloorsInDb();
       console.info('Fetched prices, added to db');
-      await updateRektEmbed(client);
-      await updateRugEmbed(client);
+      await updateRektEmbed(client, etherscan);
+      await updateRugEmbed(client, etherscan);
     } catch (error) {
       console.error(error);
     }

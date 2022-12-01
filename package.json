@@ -9,6 +9,7 @@
     "build": "tsc",
     "prestart": "yarn build",
     "start": "node dist/src/index.js",
+    "type-check": "tsc --noEmit",
     "deploy": "git push heroku main"
   },
   "engines": {
