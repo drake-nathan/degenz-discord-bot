@@ -24,7 +24,7 @@ export const getRektEmbed = async (etherscan: Etherscan) => {
 
   const rektguy = nfts.filter((nft) => nft.sectionSlug === Section.rektguy);
   const rektguyTraits = rektguy[0].specialTraitFloors.filter(
-    (trait) => trait.price !== undefined && Number(trait.price) < 10,
+    (trait) => trait.price !== undefined && Number(trait.price) < 20,
   );
   rektguyTraits.sort(sortPriceDesc);
 

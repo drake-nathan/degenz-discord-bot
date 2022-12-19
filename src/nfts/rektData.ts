@@ -12,6 +12,16 @@ export const rektNfts: Nft[] = [
     mintDate: new Date('2022-06-01'),
   },
   {
+    name: 'Degenz (Flips) Gold Pass',
+    collectionSlug: 'flipsgoldpass',
+    address: '0x8B5cC2be0519BcC13c30e83Dc439BdEab9B3D854',
+    contractType: 'ERC721',
+    fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
+    sectionSlug: Section.singles,
+    mintDate: new Date('2022-08-01'),
+  },
+  {
     name: 'Degenz',
     collectionSlug: 'degenz',
     address: '0xfb9e9e7150cCebFe42D58de1989C5283d0EAAB2e',
