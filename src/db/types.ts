@@ -13,6 +13,7 @@ export enum FetchMethod {
 export enum Server {
   rekt = 'rekt',
   rug = 'rug',
+  clicc = 'clicc',
 }
 
 export enum Section {
@@ -23,8 +24,15 @@ export enum Section {
   distillery = 'distillery',
   editions = 'editions',
   oneOfOnes = 'oneOfOnes',
-  rugs = 'rugs',
   cities = 'cities',
+  rugs = 'rugs',
+  clicc = 'clicc',
+}
+
+export enum CliccSection {
+  passes = 'passes',
+  season1 = 'season1',
+  season2 = 'season2',
 }
 
 export interface TraitFloor {
@@ -44,6 +52,7 @@ export interface Token {
   lastUpdated?: Date;
   lastSoldDate?: Date;
   lastSoldPrice?: string;
+  cliccSection?: CliccSection;
 }
 
 export type RoleName = 'Standard' | 'Scarce 2' | 'Scarce 1' | 'Rare 2' | 'Rare 1';
@@ -73,7 +82,7 @@ export interface Nft {
   contractType: ContractType;
   fetchMethod: FetchMethod;
   server: Server;
-  sectionSlug: string;
+  sectionSlug: Section;
   mintDate?: Date;
   price?: string;
   supply?: number;

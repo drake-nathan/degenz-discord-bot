@@ -25,6 +25,12 @@ export const getRugNfts = (conn: Connection) => {
   return NftModel.find({ server: Server.rug }).exec();
 };
 
+export const getCliccNfts = (conn: Connection) => {
+  const NftModel = conn.model<Nft>('Nft');
+
+  return NftModel.find({ server: Server.clicc }).exec();
+};
+
 export const updateNft = async (conn: Connection, nft: Nft) => {
   const NftModel = conn.model<Nft>('Nft');
 

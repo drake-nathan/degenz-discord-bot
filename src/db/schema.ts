@@ -36,6 +36,7 @@ export const nftSchema = new Schema<Nft>({
       lastUpdated: { type: Date },
       lastSoldDate: { type: Date },
       lastSoldPrice: { type: String },
+      cliccSection: { type: String },
     },
   ],
   rugs: [
