@@ -457,4 +457,13 @@ export const rektNfts: Nft[] = [
     sectionSlug: Section.cities,
     supply: 303,
   },
+  {
+    name: 'rektguyz secured - Ledger',
+    collectionSlug: 'ledger-x-osf-ledger-op3n-2022',
+    address: '0x83ecb33c9ac7b9bcebad835a25ba74b2477dd733',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
+    sectionSlug: Section.editions,
+  },
 ];
