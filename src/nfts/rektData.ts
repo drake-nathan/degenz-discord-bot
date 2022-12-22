@@ -42,6 +42,16 @@ export const rektNfts: Nft[] = [
     mintDate: new Date('2021-08-01'),
   },
   {
+    name: 'TABZ',
+    collectionSlug: 'tabz',
+    address: '0xFF72F37aA4EAe3B7e1752e25DB85b209f12c1A33',
+    contractType: 'ERC721',
+    fetchMethod: FetchMethod.openSeaApi,
+    server: Server.rekt,
+    sectionSlug: Section.singles,
+    mintDate: new Date('2022-12-22'),
+  },
+  {
     name: 'rektguy',
     collectionSlug: 'rektguy',
     address: '0xB852c6b5892256C264Cc2C888eA462189154D8d7',
