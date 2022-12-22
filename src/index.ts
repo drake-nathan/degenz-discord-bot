@@ -17,4 +17,3 @@ client.login(token);
 
 client.on('error', console.error);
 client.on('warn', console.warn);
-// client.on('debug', console.info);
