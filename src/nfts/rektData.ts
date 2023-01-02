@@ -425,7 +425,7 @@ export const rektNfts: Nft[] = [
   },
   {
     name: 'PAR',
-    collectionSlug: 'rekt-cities-by-osf-par',
+    collectionSlug: 'rekt-cities-par',
     address: '0x72499647776e47f73EA78982F16CE9e025B825fb',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
@@ -435,7 +435,7 @@ export const rektNfts: Nft[] = [
   },
   {
     name: 'NYC',
-    collectionSlug: 'rekt-cities-by-osf-nyc',
+    collectionSlug: 'rekt-cities-nyc',
     address: '0x87463F3E25adEEB33bc03b8a7DcE6FA60F160c8C',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
@@ -465,7 +465,7 @@ export const rektNfts: Nft[] = [
   },
   {
     name: 'LDN',
-    collectionSlug: 'rekt-cities-by-osf-ldn',
+    collectionSlug: 'rekt-cities-ldn',
     address: '0xE5F3D24ba4f701b199bf5270fB72b81BD2F1e6f6',
     contractType: 'ERC721',
     fetchMethod: FetchMethod.openSeaApi,
