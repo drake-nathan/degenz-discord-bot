@@ -23,11 +23,13 @@
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "mongoose": "^6.7.5",
-    "puppeteer": "^18.2.1"
+    "puppeteer": "^18.2.1",
+    "qs": "^6.11.0"
   },
   "devDependencies": {
     "@types/cron": "^2.0.0",
     "@types/node": "^18.7.23",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.2.0",

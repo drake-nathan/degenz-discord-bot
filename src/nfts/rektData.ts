@@ -269,6 +269,12 @@ export const rektNfts: Nft[] = [
         rldDropNumber: 10,
         mintDate: new Date('2022-12-01'),
       },
+      {
+        tokenId: 14,
+        name: 'Tin-Tin Tatouages',
+        rldDropNumber: 11,
+        mintDate: new Date('2022-12-31'),
+      },
     ],
   },
   {
