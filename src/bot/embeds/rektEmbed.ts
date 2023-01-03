@@ -61,7 +61,12 @@ export const getRektEmbed = async (etherscan: Etherscan) => {
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   editions.sort(sortPriceDesc);
 
-  // const oneOfOnes = nfts.filter((nft) => nft.sectionSlug === Section.oneOfOnes);
+  const theKeeperReturns = nfts.filter((nft) => nft.sectionSlug === Section.keeper);
+  const theKeeperReturnsFullSetPrice = theKeeperReturns
+    .map((nft) => parseFloat(nft.price))
+    .filter(Boolean)
+    .reduce((acc, price) => acc + price, 0)
+    .toString();
 
   let message: string = '';
 
@@ -94,6 +99,13 @@ export const getRektEmbed = async (etherscan: Etherscan) => {
   message += `\n**7 Deadly Sins:** \u200b ${formatEthPrice(sinsFullSetPrice)} (Full Set)`;
   message += `\n${sevenDeadlySins.tokens
     .map((sin) => `- ${sin.name}: \u200b ${formatEthPrice(sin.price, sin.name)}`)
+    .join('\n')}\n`;
+
+  message += `\n**The Keeper Returns:** \u200b ${formatEthPrice(
+    theKeeperReturnsFullSetPrice,
+  )} (Full Set)`;
+  message += `\n${theKeeperReturns
+    .map((nft) => `- ${nft.name}: \u200b ${formatEthPrice(nft.price)}`)
     .join('\n')}\n`;
 
   message += `\n**OSF's Distillery:**`;

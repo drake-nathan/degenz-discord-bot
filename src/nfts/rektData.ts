@@ -482,4 +482,25 @@ export const rektNfts: Nft[] = [
     server: Server.rekt,
     sectionSlug: Section.editions,
   },
+  {
+    name: 'The Keeper Returns',
+    collectionSlug: 'osf',
+    address: '0xc23a563A26AFFf06E945ACE77173E1568F288cE5',
+    contractType: 'ERC1155',
+    fetchMethod: FetchMethod.openSeaScrape,
+    server: Server.rekt,
+    sectionSlug: Section.keeper,
+    tokens: [
+      {
+        tokenId: 15,
+        name: 'HELP',
+        mintDate: new Date('2023-01-03'),
+      },
+      {
+        tokenId: 16,
+        name: 'On Fire!',
+        mintDate: new Date('2023-01-03'),
+      },
+    ],
+  },
 ];

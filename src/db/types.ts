@@ -27,6 +27,7 @@ export enum Section {
   cities = 'cities',
   rugs = 'rugs',
   clicc = 'clicc',
+  keeper = 'keeper',
 }
 
 export enum CliccSection {
