@@ -61,7 +61,7 @@ export const getRektEmbed = async (etherscan: Etherscan) => {
   const editions = nfts.filter((nft) => nft.sectionSlug === Section.editions);
   editions.sort(sortPriceDesc);
 
-  const theKeeperReturns = nfts.filter((nft) => nft.sectionSlug === Section.keeper);
+  const theKeeperReturns = nfts.find((nft) => nft.sectionSlug === Section.keeper).tokens;
   const theKeeperReturnsFullSetPrice = theKeeperReturns
     .map((nft) => parseFloat(nft.price))
     .filter(Boolean)
