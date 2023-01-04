@@ -501,6 +501,11 @@ export const rektNfts: Nft[] = [
         name: 'On Fire!',
         mintDate: new Date('2023-01-03'),
       },
+      {
+        tokenId: 17,
+        name: 'Burnt.',
+        mintDate: new Date('2023-01-04'),
+      },
     ],
   },
 ];
