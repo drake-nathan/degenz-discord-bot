@@ -493,22 +493,22 @@ export const rektNfts: Nft[] = [
     tokens: [
       {
         tokenId: 15,
-        name: 'HELP',
+        name: 'The Keeper Returns',
         mintDate: new Date('2023-01-03'),
       },
       {
         tokenId: 16,
-        name: 'On Fire!',
+        name: 'UPEROL RED',
         mintDate: new Date('2023-01-03'),
       },
       {
         tokenId: 17,
-        name: 'Burnt.',
+        name: 'ONE MORE',
         mintDate: new Date('2023-01-04'),
       },
       {
         tokenId: 18,
-        name: 'Ashes...',
+        name: 'Hotel Shinjuku',
         mintDate: new Date('2023-01-09'),
       },
     ],
