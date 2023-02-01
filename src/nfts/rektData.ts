@@ -275,6 +275,12 @@ export const rektNfts: Nft[] = [
         rldDropNumber: 11,
         mintDate: new Date('2022-12-31'),
       },
+      {
+        tokenId: 19,
+        name: 'FUCK CASH GRABS 2',
+        rldDropNumber: 12,
+        mintDate: new Date('2023-02-01'),
+      },
     ],
   },
   {
