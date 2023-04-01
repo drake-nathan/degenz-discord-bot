@@ -38,27 +38,27 @@ export const ready = async (client: Client) => {
     console.info('Bot online!');
 
     try {
-      const conn = await connectionFactory();
-      await clearDb(conn);
-      console.info('Cleared db');
-      await buildDb(conn, rektNfts);
-      await buildDb(conn, addRolesToRugs(rugNfts));
-      // await buildDb(conn, cliccNfts);
-      console.info('Built db');
-      await conn.close();
+      // const conn = await connectionFactory();
+      // await clearDb(conn);
+      // console.info('Cleared db');
+      // await buildDb(conn, rektNfts);
+      // await buildDb(conn, addRolesToRugs(rugNfts));
+      // // await buildDb(conn, cliccNfts);
+      // console.info('Built db');
+      // await conn.close();
 
       const etherscan = await getEtherscan();
 
-      await updateFloorsInDb();
-      console.info('Finished updating floors in db.');
+      // await updateFloorsInDb();
+      // console.info('Finished updating floors in db.');
       await updateRektEmbed(client, etherscan);
       await updateRugEmbed(client, etherscan);
       // await updateCliccEmbed(client, etherscan);
     } catch (error) {
       console.error(error);
     } finally {
-      updateDbCron.start();
-      updateEmbedCron.start();
+      // updateDbCron.start();
+      // updateEmbedCron.start();
     }
   });
 };
